@@ -4,10 +4,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
     <script src="/javascripts/angularApp.js"></script>
+    <script src="/javascripts/angularApp.js"></script>
+    <script src="/scripts/utils/apiurls.js"></script>
+    <script src="/scripts/services/apiServices.js"></script>
+    <script src="/scripts/factories/tokenFactory.js"></script>
+    <script src="/scripts/factories/languageFactory.js"></script>
+    <script src="/scripts/factories/formatFactory.js"></script>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
   </head>
   <body ng-app="flapperNews" ng-controller="MainCtrl">
     <div class="row">
-      <div class="col-md-6 col-md-offset-3">
+      <div class="col-md-6 col-md-offset-1">
         <ui-view></ui-view>
       </div>
     </div>
@@ -75,14 +83,14 @@
     <!-- Lookup view -->
     <script type="text/ng-template" id="/lookup.html">
       <div class="page-header">
-        <h1>Lookup</h1>
-      </div>
-      <span>
-        <a href="#/home">Notes</a>
+        <h1>Lookup</h1> <span>
+        <a href="#/home">Home</a>
       </span>
+      </div>
+    
 
       <!-- Symptoms forms -->
-      <h2>Enter bio</h2>
+     <!--  <h2>Enter bio</h2>
       <form ng-submit="submitSymptomForm()">
         <input type="text" placeholder="Sex" ng-model="sex"></input>
         <br>
@@ -95,10 +103,58 @@
         <input type="text" placeholder="Symptom3" ng-model="s3"></input>
         <br>
         <button type="submit">Submit description</button>
-      </form>  
+      </form>   -->
 
       <!-- Results -->
-      <div id="possible-symptoms"></div>
+      <!-- <div id="possible-symptoms"></div> -->
+
+
+<!-- Get Diagnosis Based on Symptoms -->
+      <div class="container">
+       
+          <div class="panel panel-info">
+            <div class="panel-heading">
+                <a ng-click="loadDiagnosis(selectedSymptoms,gender,yearOfBirth)" role="button" class="btn btn-success">
+                    Get Diagnosis
+                </a>
+                <a ng-click="loadDiagnosis(selectedSymptoms,gender,yearOfBirth)" role="button">
+                   
+                </a>
+                <div class="pull-right">
+                    Symptoms (comma separated ids):<input type='text' ng-model='selectedSymptoms' />
+                    |
+                    <label>
+                        <input type="radio" ng-model="gender.value" value="male">
+                        Male
+                    </label>
+                    <label>
+                        <input type="radio" ng-model="gender.value" value="female">
+                        Female
+                    </label>
+                    |
+                    Year of Birth:<input type='number' ng-model='yearOfBirth' class='single-number' />
+                </div>
+            </div>
+            <div class="panel-body">
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-success" ng-show="diagnosis != ''">
+                            <pre class="data">{{diagnosis | json}}</pre>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-6">
+                        <div class="alert alert-warning" ng-show="diagnosisConfig != ''">
+                            <pre class="data">{{diagnosisConfig | json}}</pre>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="alert alert-danger" ng-show="diagnosisError != ''">
+                    <pre class="data">{{diagnosisError | json}}</pre>
+                </div>
+            </div>
+        </div>
+      </div>
 
     </script>
   </body>
