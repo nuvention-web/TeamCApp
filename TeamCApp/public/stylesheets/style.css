@@ -1,5 +1,4 @@
 body {
-	padding: 50px;
 	font-family: 'Lato', Helvetica, Arial, sans-serif;
 	background-color: #fcfcfc;
 }
@@ -75,6 +74,41 @@ button:active:after {
 }
 
 input {
-  border: 2px solid #898989;
-  padding: 5px 16px;
+	border: 2px solid #898989;
+	padding: 5px 16px;
+}
+
+/* Sidebar */
+
+.sidebar {
+	float: left;
+	width: 200px;
+	height: 100vh;
+	border-right: 1px solid #d9d9d9;
+}
+
+.sidebar-option {
+	padding: 15px 30px;
+}
+
+.sidebar-option a {
+	color: #525252;
+	font-size: 20px;
+	text-decoration: none;
+}
+
+.sidebar-option a:hover {
+	color: #ff4489;
+	text-decoration: none;
+}
+
+.hide {
+	display: none;
+}
+
+.page {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: auto;
 }

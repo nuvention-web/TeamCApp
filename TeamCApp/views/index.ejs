@@ -15,27 +15,48 @@
   </head>
   <body ng-app="flapperNews" ng-controller="MainCtrl">
     <div class="row">
-      <div class="col-md-6 col-md-offset-1">
+      <div class="col-md-12">
         <ui-view></ui-view>
       </div>
     </div>
 
-    <!-- Home view --> 
+    <!-- Welcome page --> 
     <script type="text/ng-template" id="/home.html">
       <div class='sidebar'>
-        <div class='talking'>
-          <h2>Talking Points</h2>
+        <div class='home sidebar-option'>
+          <a href='#'>Home</a>
         </div>
-        <div class='notes'>
-          <h2>Notes</h2>
+        <div class='talking sidebar-option'>
+          <a href='#'>Talking Points</a>
         </div>
-        <div class='symptoms-log'>
-          <h2>Symptoms log</h2>
+        <div class='notes sidebar-option'>
+          <a href='#'>Notes</a>
         </div>
-        <div class='lookup'>
-          <h2>Diagnosis</h2>
+        <div class='symptoms-log sidebar-option'>
+          <a href='#'>Symptoms log</a>
+        </div>
+        <div class='documents sidebar-option'>
+          <a href='#'>Documents</a>
+        </div>
+        <div class='lookup sidebar-option'>
+          <a href='#/lookup'>Diagnosis</a>
+        </div>
+        <div class='account sidebar-option'>
+          <a href='#'>Account</a>
+        </div>
+        <div class='logout sidebar-option'>
+          <a href='#'>Logout</a>
         </div>
       </div>
+      <div class='welcome page'>
+        <div>
+          <h1>Welcome</h1>
+          <h4>Your personalized health app portal</h4>
+        </div>
+      </div>
+
+      <!-- =========== THIS PART IS HIDDEN - put this in a different "notes" and "talking point" controller -->
+      <div class='hide'>
       <div class="page-header">
         <h1>Notes</h1>
       </div>
@@ -92,6 +113,7 @@
         <br>
         <button type="submit">Add</button>
       </form>
+    </div> <!-- ======================================================= END OF HIDDEN CLASS -->
     </script>
 
     <!-- Lookup view -->
@@ -168,6 +190,7 @@
                 </div>
             </div>
         </div>
+      </div>
       </div>
 
     </script>
