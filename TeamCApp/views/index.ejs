@@ -22,19 +22,27 @@
       </span>
       <!-- Unfinished talking points -->
       <h2>Talking points</h2>
-      <div ng-repeat="point in points | orderBy: '-priority'">
-        <span ng-click="completedPoint(point)">(Checkbox)</span>
-        {{point.title}} - priority: {{point.priority}}
-        <span ng-click="incrementPriority(point)">+</span>
-        <span ng-click="decrementPriority(point)">-</span>
-      </div>
+      <ol>
+        <div ng-repeat="point in points | orderBy: '-priority'">
+          <li>
+            {{point.title}} [Priority {{point.priority}}]
+            <span ng-click="incrementPriority(point)">+</span>
+            <span ng-click="decrementPriority(point)">-</span>
+            <span ng-click="completedPoint(point)">Complete</span>
+          </li>
+        </div>
+      </ol>
 
       <!-- Completed talking points -->
       <h2>Completed</h2>
-      <div ng-repeat="point in completed">
-        <span ng-click="undoComplete(point)">(Undo)</span>
-        {{point.title}} - priority: {{point.priority}}
-      </div>
+      <ul>
+        <div ng-repeat="point in completed">
+          <li>
+            <span ng-click="undoComplete(point)">(Undo)</span>
+            {{point.title}} [Priority {{point.priority}}]
+          </li>
+        </div>
+      </ul>
 
       <!-- Add talking point -->
       <h2>Add point</h2>
@@ -46,10 +54,14 @@
 
       <!-- Notes -->
       <h2>Notes</h2>
-      <div ng-repeat="note in notes">
-        <span ng-click="deleteNote(note)">(Delete)</span>
-        {{note.desc}}
-      </div>
+      <ul>
+        <div ng-repeat="note in notes">
+          <li>
+            {{note.desc}}
+            <span ng-click="deleteNote(note)">Delete</span>
+          </li>
+        </div>
+      </ul>
 
       <!-- Add notes -->
       <h2>Add note</h2>
