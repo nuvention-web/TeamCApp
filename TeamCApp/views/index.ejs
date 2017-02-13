@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <title>My Angular App!</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
+    <script src="/javascripts/angularApp.js"></script>
+  </head>
+  <body ng-app="flapperNews" ng-controller="MainCtrl">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <ui-view></ui-view>
+      </div>
+    </div>
+
+    <!-- Home view --> 
+    <script type="text/ng-template" id="/home.html">
+      <div class="page-header">
+        <h1>Notes</h1>
+      </div>
+      <span>
+        <a href="#/lookup">Symptom lookup</a>
+      </span>
+      <!-- Unfinished talking points -->
+      <h2>Talking points</h2>
+      <div ng-repeat="point in points | orderBy: '-priority'">
+        <span ng-click="completedPoint(point)">(Checkbox)</span>
+        {{point.title}} - priority: {{point.priority}}
+        <span ng-click="incrementPriority(point)">+</span>
+        <span ng-click="decrementPriority(point)">-</span>
+      </div>
+
+      <!-- Completed talking points -->
+      <h2>Completed</h2>
+      <div ng-repeat="point in completed">
+        <span ng-click="undoComplete(point)">(Undo)</span>
+        {{point.title}} - priority: {{point.priority}}
+      </div>
+
+      <!-- Add talking point -->
+      <h2>Add point</h2>
+      <form ng-submit="addPoint()">
+        <input type="text" placeholder="Title" ng-model="title"></input>
+        <br>
+        <button type="submit">Add</button>
+      </form>
+
+      <!-- Notes -->
+      <h2>Notes</h2>
+      <div ng-repeat="note in notes">
+        <span ng-click="deleteNote(note)">(Delete)</span>
+        {{note.desc}}
+      </div>
+
+      <!-- Add notes -->
+      <h2>Add note</h2>
+      <form ng-submit="addNote()">
+        <input type="text" placeholder="Desc" ng-model="desc"></input>
+        <br>
+        <button type="submit">Add</button>
+      </form>
+    </script>
+
+    <!-- Lookup view -->
+    <script type="text/ng-template" id="/lookup.html">
+      <div class="page-header">
+        <h1>Lookup</h1>
+      </div>
+      <span>
+        <a href="#/home">Notes</a>
+      </span>
+
+      <!-- Symptoms forms -->
+      <h2>Enter bio</h2>
+      <form ng-submit="submitSymptomForm()">
+        <input type="text" placeholder="Sex" ng-model="sex"></input>
+        <br>
+        <input type="number" placeholder="Age" ng-model="age"></input>
+        <br>
+        <input type="text" placeholder="Symptom1" ng-model="s1"></input>
+        <br>
+        <input type="text" placeholder="Symptom2" ng-model="s2"></input>
+        <br>
+        <input type="text" placeholder="Symptom3" ng-model="s3"></input>
+        <br>
+        <button type="submit">Submit description</button>
+      </form>  
+
+      <!-- Results -->
+      <div id="possible-symptoms"></div>
+
+    </script>
+  </body>
+</html>
