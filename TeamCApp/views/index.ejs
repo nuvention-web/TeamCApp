@@ -13,16 +13,33 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
   </head>
+
   <body ng-app="flapperNews" ng-controller="MainCtrl">
     <div class="row">
       <div class="col-md-12">
         <ui-view></ui-view>
       </div>
     </div>
+    <div ng-view></div>
+
 
     <!-- Welcome page --> 
     <script type="text/ng-template" id="/home.html">
-      <div class='sidebar'>
+    <div style="height:100px;"></div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li ng-class="{ active: isActive('/')}"><a href="/">HOME</a></li>
+            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">DIAGNOSE</a></li>
+            <li ng-class="{ active: isActive('/')}"><a href="/">SYMPTOMS</a></li>
+            <li ng-class="{ active: isActive('/')}"><a href="/">NOTES</a></li>
+            <li ng-class="{ active: isActive('/')}"><a href="/">ACCOUNT</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!--   <div class='sidebar'>
         <div class='home sidebar-option'>
           <a href='#'>Home</a>
         </div>
@@ -47,7 +64,7 @@
         <div class='logout sidebar-option'>
           <a href='#'>Logout</a>
         </div>
-      </div>
+      </div> -->
       <div class='welcome page'>
         <div>
           <h1>Welcome</h1>
@@ -118,12 +135,21 @@
 
     <!-- Lookup view -->
     <script type="text/ng-template" id="/lookup.html">
-      <div class="page-header">
-        <h1>Lookup</h1> <span>
-        <a href="#/home">Home</a>
-      </span>
+      <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li ng-class="{ active: isActive('/')}"><a href="/">HOME</a></li>
+            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">DIAGNOSE</a></li>
+            <li ng-class="{ active: isActive('/')}"><a href="/">SYMPTOMS</a></li>
+            <li ng-class="{ active: isActive('/')}"><a href="/">NOTES</a></li>
+            <li ng-class="{ active: isActive('/')}"><a href="/">ACCOUNT</a></li>
+          </ul>
+        </div>
       </div>
+    </nav>
     
+    <div style="height:100px;"></div>
 
       <!-- Symptoms forms -->
      <!--  <h2>Enter bio</h2>

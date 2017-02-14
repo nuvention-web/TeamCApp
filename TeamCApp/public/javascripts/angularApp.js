@@ -1,8 +1,8 @@
 var app = angular.module('flapperNews', ['ui.router', 'apiServices', 'tokenFactory', 'languageFactory', 'formatFactory', 'apiUrls']);
 
 app.controller('MainCtrl', [
-'$scope',
-function($scope){
+'$scope', '$location',
+function($scope, $location){
   $scope.points = [
     // {title: 'Knee pain', priority: 5},
     // {title: 'Morning cough', priority: 2},
@@ -38,38 +38,53 @@ function($scope){
   $scope.deleteNote = function(note){
     $scope.notes.pop(note)
   };
+ $scope.isActive = function (viewLocation) { 
+        return viewLocation === $location.path();
+    };
+
 }]);
+
+  // app.controller('HeaderController', ['$scope', '$location',
+  //   function($scope, $location) {
+  //   $scope.isActive = function (viewLocation) { 
+  //       return viewLocation === $location.path();
+  //   };
+  // }]);
+
 
 app.controller('LookupCtrl', [
   '$scope',
   '$http',
-  'apiServices', 'tokenFactory', 'languageFactory', 'formatFactory', 'apiUrls',
-  // '$stateParams',
+  'apiServices', 'tokenFactory', 'languageFactory', 'formatFactory', 'apiUrls', '$location',
+    // '$stateParams',
   // 'posts',
-  function($scope, $http, apiServices, tokenFactory, languageFactory, formatFactory, apiUrls){
-    
-    $scope.submitSymptomForm = function() {
-      var url = 'https://api.infermedica.com/v2/diagnosis';
-      var h = {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'App-Id': '0a050d61', 
-          'App-Key': '27b39f8797dd512dad0c647e3a2b0879', 
-          'Dev-Mode': true}
-        };
-      var d = {
-        data: {'sex': 'male', 'age': 30, 
-                'evidence': [{"id": "s_1193", "choice_id": "present"}]}
-        };
+  function($scope, $http, apiServices, tokenFactory, languageFactory, formatFactory, apiUrls, $location){
+    $scope.isActive = function (viewLocation) { 
+        return viewLocation === $location.path();
+    };
 
-      $http.post(url, h, d)
-        .then(function(response) {
-          console.log(response);
-        },
-        function(reason) {
-          console.error('ERROR: ' + JSON.stringify(reason));
-        });
+    // $scope.submitSymptomForm = function() {
+    //   var url = 'https://api.infermedica.com/v2/diagnosis';
+    //   var h = {
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Accept': 'application/json',
+    //       'App-Id': '0a050d61', 
+    //       'App-Key': '27b39f8797dd512dad0c647e3a2b0879', 
+    //       'Dev-Mode': true}
+    //     };
+    //   var d = {
+    //     data: {'sex': 'male', 'age': 30, 
+    //             'evidence': [{"id": "s_1193", "choice_id": "present"}]}
+    //     };
+
+    //   $http.post(url, h, d)
+    //     .then(function(response) {
+    //       console.log(response);
+    //     },
+    //     function(reason) {
+    //       console.error('ERROR: ' + JSON.stringify(reason));
+    //     });
 
       // $http.post('https://api.infermedica.com/v2/diagnosis', 
       //           {headers: {'App-Id': '0a050d61', 'App-Key': 'da284e44c660689c77129697a386fd67', 'Content-Type': 'application/json', 'Dev-Mode': 'true'}}, 
@@ -86,7 +101,7 @@ app.controller('LookupCtrl', [
 
 
   
-    }
+    // }
     var vm = $scope;
 
     vm.symptoms = '';
@@ -150,7 +165,7 @@ app.controller('LookupCtrl', [
     //Setting first option as selected in configuration select
     vm.format = vm.formats[0].value;
     
-    vm.token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImtpdHR5LnIubGl1QGdtYWlsLmNvbSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiMTE3MSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdmVyc2lvbiI6IjIwMCIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbGltaXQiOiI5OTk5OTk5OTkiLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL21lbWJlcnNoaXAiOiJQcmVtaXVtIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9sYW5ndWFnZSI6ImVuLWdiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9leHBpcmF0aW9uIjoiMjA5OS0xMi0zMSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcHN0YXJ0IjoiMjAxNy0wMi0xMyIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hdXRoc2VydmljZS5wcmlhaWQuY2giLCJhdWQiOiJodHRwczovL2hlYWx0aHNlcnZpY2UucHJpYWlkLmNoIiwiZXhwIjoxNDg2OTY4OTk2LCJuYmYiOjE0ODY5NjE3OTZ9.yBuDHHvNKILXsCk9rYAJmGg6fClazt9gW9Meu4mesHk';
+    vm.token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImtpdHR5LnIubGl1QGdtYWlsLmNvbSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiMTE3MSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdmVyc2lvbiI6IjIwMCIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbGltaXQiOiI5OTk5OTk5OTkiLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL21lbWJlcnNoaXAiOiJQcmVtaXVtIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9sYW5ndWFnZSI6ImVuLWdiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9leHBpcmF0aW9uIjoiMjA5OS0xMi0zMSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcHN0YXJ0IjoiMjAxNy0wMi0xMyIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hdXRoc2VydmljZS5wcmlhaWQuY2giLCJhdWQiOiJodHRwczovL2hlYWx0aHNlcnZpY2UucHJpYWlkLmNoIiwiZXhwIjoxNDg3MDQ3NDc3LCJuYmYiOjE0ODcwNDAyNzd9.br9VZgqpdSJeXyhTMiQBWt678ELC_UBuKX7DBil2gwg';
     tokenFactory.storeToken(vm.token);
 
     // vm.loadSymptoms = function () {
