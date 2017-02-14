@@ -3,46 +3,48 @@ var app = angular.module('flapperNews', ['ui.router', 'apiServices', 'tokenFacto
 app.controller('MainCtrl', [
 '$scope', '$location',
 function($scope, $location){
-  $scope.points = [
-    // {title: 'Knee pain', priority: 5},
-    // {title: 'Morning cough', priority: 2},
-    // {title: 'Itchy skin', priority: 1},
-  ];
-  $scope.completed = [
-    // completed posts go here
-  ];
-  $scope.notes = [
-    // added notes go here
-  ];
-  $scope.addPoint = function(){
-    if(!$scope.title || $scope.title === '') { return; }
-    $scope.points.push({title: $scope.title, priority: 1});
-  };
-  $scope.incrementPriority = function(point) {
-    point.priority += 1;
-  };
-  $scope.decrementPriority = function(point) {
-    point.priority -= 1;
-  };
-  $scope.completedPoint = function(point) {
-    $scope.points.pop(point);
-    $scope.completed.push(point);
-  };
-  $scope.undoComplete = function(point) {
-    $scope.points.push(point);
-    $scope.completed.pop(point);
-  };
-  $scope.addNote = function(){
-    $scope.notes.push({desc: $scope.desc});
-  };
-  $scope.deleteNote = function(note){
-    $scope.notes.pop(note)
-  };
  $scope.isActive = function (viewLocation) { 
-        return viewLocation === $location.path();
-    };
+    return viewLocation === $location.path();
+  };
 
 }]);
+
+app.controller('TalkingCtrl', [
+  '$scope',
+  function($scope, $location){
+    $scope.points = [];
+    $scope.completed = [];
+    $scope.addPoint = function(){
+      if(!$scope.title || $scope.title === '') { return; }
+      $scope.points.push({title: $scope.title, priority: 1});
+    };
+    $scope.incrementPriority = function(point) {
+      point.priority += 1;
+    };
+    $scope.decrementPriority = function(point) {
+      point.priority -= 1;
+    };
+    $scope.completedPoint = function(point) {
+      $scope.points.pop(point);
+      $scope.completed.push(point);
+    };
+    $scope.undoComplete = function(point) {
+      $scope.points.push(point);
+      $scope.completed.pop(point);
+    };
+  }]);
+
+app.controller('NotesCtrl', [
+  '$scope',
+  function($scope, $location){
+    $scope.notes = [];
+    $scope.addNote = function(){
+      $scope.notes.push({desc: $scope.desc});
+    };
+    $scope.deleteNote = function(note){
+      $scope.notes.pop(note)
+    };
+  }]);
 
   // app.controller('HeaderController', ['$scope', '$location',
   //   function($scope, $location) {
@@ -63,45 +65,6 @@ app.controller('LookupCtrl', [
         return viewLocation === $location.path();
     };
 
-    // $scope.submitSymptomForm = function() {
-    //   var url = 'https://api.infermedica.com/v2/diagnosis';
-    //   var h = {
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Accept': 'application/json',
-    //       'App-Id': '0a050d61', 
-    //       'App-Key': '27b39f8797dd512dad0c647e3a2b0879', 
-    //       'Dev-Mode': true}
-    //     };
-    //   var d = {
-    //     data: {'sex': 'male', 'age': 30, 
-    //             'evidence': [{"id": "s_1193", "choice_id": "present"}]}
-    //     };
-
-    //   $http.post(url, h, d)
-    //     .then(function(response) {
-    //       console.log(response);
-    //     },
-    //     function(reason) {
-    //       console.error('ERROR: ' + JSON.stringify(reason));
-    //     });
-
-      // $http.post('https://api.infermedica.com/v2/diagnosis', 
-      //           {headers: {'App-Id': '0a050d61', 'App-Key': 'da284e44c660689c77129697a386fd67', 'Content-Type': 'application/json', 'Dev-Mode': 'true'}}, 
-      //           {'sex': 'male', 'age': 30, 
-      //             'evidence': [{"id": "s_1193", "choice_id": "present"},
-      //                          {"id": "s_488", "choice_id": "present"},
-      //                          {"id": "s_418", "choice_id": "present"}]})
-      //   .then(function(response) {
-      //     console.log(response);
-      //   },
-      //   function(reason) {
-      //     console.error('ERROR: ' + JSON.stringify(reason));
-      //   });
-
-
-  
-    // }
     var vm = $scope;
 
     vm.symptoms = '';
@@ -235,6 +198,20 @@ function($stateProvider, $urlRouterProvider) {
       url: '/lookup',
       templateUrl: '/lookup.html',
       controller: 'LookupCtrl'
+    });
+
+  $stateProvider   
+    .state('talking', {
+      url: '/talking',
+      templateUrl: '/talking.html',
+      controller: 'TalkingCtrl'
+    });
+
+  $stateProvider   
+    .state('notes', {
+      url: '/notes',
+      templateUrl: '/notes.html',
+      controller: 'NotesCtrl'
     });
 
 

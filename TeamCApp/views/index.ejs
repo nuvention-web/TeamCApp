@@ -33,104 +33,110 @@
             <li ng-class="{ active: isActive('/')}"><a href="/">HOME</a></li>
             <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">DIAGNOSE</a></li>
             <li ng-class="{ active: isActive('/')}"><a href="/">SYMPTOMS</a></li>
-            <li ng-class="{ active: isActive('/')}"><a href="/">NOTES</a></li>
+            <li ng-class="{ active: isActive('#talking')}"><a href="#/talking">TALKING POINTS</a></li>
+            <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">NOTES</a></li>
             <li ng-class="{ active: isActive('/')}"><a href="/">ACCOUNT</a></li>
           </ul>
         </div>
       </div>
     </nav>
-    <!--   <div class='sidebar'>
-        <div class='home sidebar-option'>
-          <a href='#'>Home</a>
-        </div>
-        <div class='talking sidebar-option'>
-          <a href='#'>Talking Points</a>
-        </div>
-        <div class='notes sidebar-option'>
-          <a href='#'>Notes</a>
-        </div>
-        <div class='symptoms-log sidebar-option'>
-          <a href='#'>Symptoms log</a>
-        </div>
-        <div class='documents sidebar-option'>
-          <a href='#'>Documents</a>
-        </div>
-        <div class='lookup sidebar-option'>
-          <a href='#/lookup'>Diagnosis</a>
-        </div>
-        <div class='account sidebar-option'>
-          <a href='#'>Account</a>
-        </div>
-        <div class='logout sidebar-option'>
-          <a href='#'>Logout</a>
-        </div>
-      </div> -->
       <div class='welcome page'>
-        <div>
+        <div class='page-header'>
           <h1>Welcome</h1>
+        </div>
           <h4>Your personalized health app portal</h4>
+      </div>
+    </script>
+
+    <!-- Talking points -->
+    <script type="text/ng-template" id="/talking.html">
+    <div style="height:100px;"></div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li ng-class="{ active: isActive('/')}"><a href="/">HOME</a></li>
+            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">DIAGNOSE</a></li>
+            <li ng-class="{ active: isActive('/')}"><a href="/">SYMPTOMS</a></li>
+            <li ng-class="{ active: isActive('#talking')}"><a href="#/talking">TALKING POINTS</a></li>
+            <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">NOTES</a></li>
+            <li ng-class="{ active: isActive('/')}"><a href="/">ACCOUNT</a></li>
+          </ul>
         </div>
       </div>
-
-      <!-- =========== THIS PART IS HIDDEN - put this in a different "notes" and "talking point" controller -->
-      <div class='hide'>
+    </nav>
+    <div class='talking page'>
       <div class="page-header">
-        <h1>Notes</h1>
+        <h1>Talking points</h1>
       </div>
-      <span>
-        <a href="#/lookup">Symptom lookup</a>
-      </span>
-      <!-- Unfinished talking points -->
-      <h2>Talking points</h2>
-      <ol>
-        <div ng-repeat="point in points | orderBy: '-priority'">
-          <li>
-            {{point.title}} [Priority {{point.priority}}]
-            <span ng-click="incrementPriority(point)">+</span>
-            <span ng-click="decrementPriority(point)">-</span>
-            <span ng-click="completedPoint(point)">Complete</span>
-          </li>
-        </div>
-      </ol>
-
-      <!-- Completed talking points -->
-      <h2>Completed</h2>
-      <ul>
-        <div ng-repeat="point in completed">
-          <li>
-            <span ng-click="undoComplete(point)">(Undo)</span>
-            {{point.title}} [Priority {{point.priority}}]
-          </li>
-        </div>
-      </ul>
-
-      <!-- Add talking point -->
+      <div class='lists'>
+        <!-- Incomplete points -->
+        <ol>
+          <div ng-repeat="point in points | orderBy: '-priority'">
+            <li>
+              {{point.title}} [Priority {{point.priority}}]
+              <span ng-click="incrementPriority(point)">+</span>
+              <span ng-click="decrementPriority(point)">-</span>
+              <span ng-click="completedPoint(point)">Complete</span>
+            </li>
+          </div>
+        </ol>
+        <!-- Completed points -->
+        <ul>
+          <div ng-repeat="point in completed">
+            <li>
+              <span ng-click="undoComplete(point)">(Undo)</span>
+              {{point.title}} [Priority {{point.priority}}]
+            </li>
+          </div>
+        </ul>
+      </div>
       <h2>Add point</h2>
       <form ng-submit="addPoint()">
         <input type="text" placeholder="Title" ng-model="title"></input>
         <br>
         <button type="submit">Add</button>
       </form>
+    </div>
+    </script>
 
-      <!-- Notes -->
-      <h2>Notes</h2>
-      <ul>
-        <div ng-repeat="note in notes">
-          <li>
-            {{note.desc}}
-            <span ng-click="deleteNote(note)">Delete</span>
-          </li>
+    <script type="text/ng-template" id="/notes.html">
+    <div style="height:100px;"></div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li ng-class="{ active: isActive('/')}"><a href="/">HOME</a></li>
+            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">DIAGNOSE</a></li>
+            <li ng-class="{ active: isActive('/')}"><a href="/">SYMPTOMS</a></li>
+            <li ng-class="{ active: isActive('#talking')}"><a href="#/talking">TALKING POINTS</a></li>
+            <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">NOTES</a></li>
+            <li ng-class="{ active: isActive('/')}"><a href="/">ACCOUNT</a></li>
+          </ul>
         </div>
-      </ul>
-
-      <!-- Add notes -->
+      </div>
+    </nav>
+    <div class='notes page'>
+      <div class="page-header">
+        <h1>Notes</h1>
+      </div>
+      <div class='lists'>
+        <ul>
+          <div ng-repeat="note in notes">
+            <li>
+              {{note.desc}}
+              <span ng-click="deleteNote(note)">Delete</span>
+            </li>
+          </div>
+        </ul>
+      </div>
       <h2>Add note</h2>
-      <form ng-submit="addNote()">
-        <input type="text" placeholder="Desc" ng-model="desc"></input>
-        <br>
-        <button type="submit">Add</button>
-      </form>
-    </div> <!-- ======================================================= END OF HIDDEN CLASS -->
+        <form ng-submit="addNote()">
+          <input type="text" placeholder="Desc" ng-model="desc"></input>
+          <br>
+          <button type="submit">Add</button>
+        </form>
+      </div>
     </script>
 
     <!-- Lookup view -->
@@ -142,7 +148,8 @@
             <li ng-class="{ active: isActive('/')}"><a href="/">HOME</a></li>
             <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">DIAGNOSE</a></li>
             <li ng-class="{ active: isActive('/')}"><a href="/">SYMPTOMS</a></li>
-            <li ng-class="{ active: isActive('/')}"><a href="/">NOTES</a></li>
+            <li ng-class="{ active: isActive('#talking')}"><a href="#/talking">TALKING POINTS</a></li>
+            <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">NOTES</a></li>
             <li ng-class="{ active: isActive('/')}"><a href="/">ACCOUNT</a></li>
           </ul>
         </div>
@@ -150,26 +157,6 @@
     </nav>
     
     <div style="height:100px;"></div>
-
-      <!-- Symptoms forms -->
-     <!--  <h2>Enter bio</h2>
-      <form ng-submit="submitSymptomForm()">
-        <input type="text" placeholder="Sex" ng-model="sex"></input>
-        <br>
-        <input type="number" placeholder="Age" ng-model="age"></input>
-        <br>
-        <input type="text" placeholder="Symptom1" ng-model="s1"></input>
-        <br>
-        <input type="text" placeholder="Symptom2" ng-model="s2"></input>
-        <br>
-        <input type="text" placeholder="Symptom3" ng-model="s3"></input>
-        <br>
-        <button type="submit">Submit description</button>
-      </form>   -->
-
-      <!-- Results -->
-      <!-- <div id="possible-symptoms"></div> -->
-
 
 <!-- Get Diagnosis Based on Symptoms -->
       <div class="container">
