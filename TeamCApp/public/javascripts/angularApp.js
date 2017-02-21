@@ -1,4 +1,4 @@
-var app = angular.module('flapperNews', ['ui.router', 'apiServices', 'tokenFactory', 'languageFactory', 'formatFactory', 'apiUrls']);
+var app = angular.module('flapperNews', ['ui.router', 'apiServices', 'tokenFactory', 'languageFactory', 'formatFactory', 'apiUrls', 'checklist-model']);
 
 app.controller('MainCtrl', [
 '$scope', '$location',
@@ -57,7 +57,7 @@ app.controller('NotesCtrl', [
 app.controller('LookupCtrl', [
   '$scope',
   '$http',
-  'apiServices', 'tokenFactory', 'languageFactory', 'formatFactory', 'apiUrls', '$location',
+  'apiServices', 'tokenFactory', 'languageFactory', 'formatFactory', 'apiUrls', '$location', 
     // '$stateParams',
   // 'posts',
   function($scope, $http, apiServices, tokenFactory, languageFactory, formatFactory, apiUrls, $location){
@@ -128,19 +128,114 @@ app.controller('LookupCtrl', [
     //Setting first option as selected in configuration select
     vm.format = vm.formats[0].value;
     
-    vm.token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImtpdHR5LnIubGl1QGdtYWlsLmNvbSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiMTE3MSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdmVyc2lvbiI6IjIwMCIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbGltaXQiOiI5OTk5OTk5OTkiLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL21lbWJlcnNoaXAiOiJQcmVtaXVtIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9sYW5ndWFnZSI6ImVuLWdiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9leHBpcmF0aW9uIjoiMjA5OS0xMi0zMSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcHN0YXJ0IjoiMjAxNy0wMi0xMyIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hdXRoc2VydmljZS5wcmlhaWQuY2giLCJhdWQiOiJodHRwczovL2hlYWx0aHNlcnZpY2UucHJpYWlkLmNoIiwiZXhwIjoxNDg3MDQ3NDc3LCJuYmYiOjE0ODcwNDAyNzd9.br9VZgqpdSJeXyhTMiQBWt678ELC_UBuKX7DBil2gwg';
+    // TOKEN HARD CODED
+    vm.token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImtpdHR5LnIubGl1QGdtYWlsLmNvbSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiMTE3MSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdmVyc2lvbiI6IjIwMCIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbGltaXQiOiI5OTk5OTk5OTkiLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL21lbWJlcnNoaXAiOiJQcmVtaXVtIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9sYW5ndWFnZSI6ImVuLWdiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9leHBpcmF0aW9uIjoiMjA5OS0xMi0zMSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcHN0YXJ0IjoiMjAxNy0wMi0xMyIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hdXRoc2VydmljZS5wcmlhaWQuY2giLCJhdWQiOiJodHRwczovL2hlYWx0aHNlcnZpY2UucHJpYWlkLmNoIiwiZXhwIjoxNDg3NjUwODEyLCJuYmYiOjE0ODc2NDM2MTJ9.r5cyzeP1KKhTcpFUWHyNbryaOmOT8b23t6LxSZfdkJo';
     tokenFactory.storeToken(vm.token);
 
-    // vm.loadSymptoms = function () {
-    //   var url = apiUrls.loadSymptoms;
-    //   generic_api_call(url, 'symptoms','symptomsError','symptomsConfig');
-    // }
 
+    vm.getToken = function () {
+            var computedHash = CryptoJS.HmacMD5(apiUrls.authServiceUrl, vm.password);
+            var computedHashString = computedHash.toString(CryptoJS.enc.Base64);
+        apiServices.makeRequest({
+            URL: apiUrls.authServiceUrl,
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + vm.username + ':' + computedHashString
+            }
+        })
+                .then(function (data) {
+                    console.log(data);
+                    vm.token = data.data.Token;
+                    vm.error = '';
+                }, function (data) {
+                    console.log('error', data);
+                    vm.error = data.data;
+                    vm.token = '';
+                    return false;
+                });
+    }
+
+
+    //  LOAD THE BODY LOCATIONS #1
+    vm.loadBodyLocations = function () {     
+      console.log('yay');
+      var url = apiUrls.loadBodyLocations;
+      generic_api_call(url, 'bodyLocations','bodyLocationsError','bodyLocationsConfig');
+     }
+    // LOAD THE SUB BODY LOCATIONS #2
+     vm.loadBodySublocations = function (bodyLocationId) {
+      $scope.subBody = true;
+      var url = apiUrls.loadBodySublocations+'/'+bodyLocationId;
+      generic_api_call(url, 'bodySublocations','bodySublocationsError','bodySublocationsConfig');
+    }
+
+    // LOAD THE SYMPTOMS #3
+    vm.loadBodySublocationSymptoms = function (bodySublocationId, selectorStatus) {
+      $scope.subSymptoms = true;
+      var url = apiUrls.loadBodySublocationSymptoms+'/'+bodySublocationId+'/'+selectorStatus.value;
+      generic_api_call(url, 'bodySublocationSymptoms','bodySublocationSymptomsError','bodySublocationSymptomsConfig');
+    }
+
+    //  LOAD THE DIAGNOSIS #4
     vm.loadDiagnosis = function (selectedSymptoms, gender, yearOfBirth) {
+      $scope.loadDiag = true;
       var symptoms = selectedSymptoms.split(',');
       var url = apiUrls.loadDiagnosis+'?symptoms='+JSON.stringify(symptoms)+'&gender='+gender.value+'&year_of_birth='+yearOfBirth;
       generic_api_call(url, 'diagnosis','diagnosisError','diagnosisConfig');
-        }
+    }
+
+
+    // GENERATE A LIST OF INFORMATION TO DISPLAY AFTER API IS CALLED
+    vm.listBodyLocations = function (bodyLocations) {
+
+     if ($scope.subSymptoms == true) {  // LOADING SUB BODY SYMPTOMS #3, #4
+          for (var i = 0; i < $scope.bodySublocationSymptoms.length; i++) {
+              vm.loadDiagnosis($scope.bodySublocationSymptoms[i].ID.toString(), $scope.gender, $scope.yearOfBirth);
+          }
+          $scope.subSymptoms = false;
+      } else if ($scope.subBody == true) { // LOADING SUB BODY PARTS #2
+         $scope.subbodyParts = bodyLocations;
+         $scope.subBody = false;
+      } else { // LOADING BODY PARTS #1
+        $scope.bodyParts = bodyLocations;
+      }
+      $scope.locationListed = true; 
+    }
+
+    // FIRST CONTINUE BUTTON IS CLICKED
+    vm.Done = function(){
+      $scope.bodyLocationId = $scope.partList.bodyParts[0];
+      vm.loadBodySublocations($scope.bodyLocationId);
+    }
+
+    // SECOND CONTINUE BUTTON IS CLICKED
+    vm.DoneSub = function(){
+      $scope.bodySublocationId = $scope.partList.subbodyParts[0];
+      vm.loadBodySublocationSymptoms($scope.bodySublocationId, $scope.selectorStatus);
+    }
+
+// LIST OF BODY AND SUB BODY PARTS GENERATED FROM THE API
+  $scope.partList = {
+    bodyParts: [],
+    subbodyParts: []
+  };
+
+  $scope.symptomList = []; // ARRAY OF DIAGNOSIS OBJECTS
+  $scope.symptomNames = []; // ARRAY OF ONLY NAMES OF DIAGNOSIS FROM symptomList
+
+
+
+  // CREATE LIST OF DIAGNOSIS NAMES TO BE DISPLAYED
+  vm.showSymptoms = function(symList){
+    for (var i = 0; i < symList.data.length; i++) {
+      var x = symList.data[i].Issue.Name;
+      $scope.symptomNames.push(x);
+    }
+    console.log($scope.symptomNames);
+  }
+
+
+
 
     // $scope.$watch(
     //   function watchToken( scope ) {
@@ -167,6 +262,14 @@ app.controller('LookupCtrl', [
         vm[scope_config_variable_name] = data.config;
         vm[scope_error_variable_name] = '';
         console.log('success', data);
+        
+        if (scope_variable_name == 'diagnosis') {
+          vm.showSymptoms(data);
+          $scope.symptomList.push(data);
+        } else {
+          vm.listBodyLocations(vm[scope_variable_name]);
+        }
+        
       }, function (data) {
         vm[scope_variable_name] = '';
         vm[scope_config_variable_name] = '';
