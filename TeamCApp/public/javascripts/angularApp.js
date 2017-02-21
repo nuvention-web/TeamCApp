@@ -119,6 +119,8 @@ app.controller('LookupCtrl', [
     vm.redFlagTextConfig = '';
     vm.redFlagTextError = '';
     vm.symptomId = 238;
+
+    vm.continue = false; // false = do first continue, true = do second continue
     
     vm.languages=[{value:"en-gb",name:"en-gb"},{value:"de-ch",name:"de-ch"},{value:"fr-fr",name:"fr-fr"},{value:"es-es",name:"es-es"},{value:"tr-tr",name:"tr-tr"}]
     //Setting first option as selected in configuration select
@@ -129,7 +131,7 @@ app.controller('LookupCtrl', [
     vm.format = vm.formats[0].value;
     
     // TOKEN HARD CODED
-    vm.token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImtpdHR5LnIubGl1QGdtYWlsLmNvbSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiMTE3MSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdmVyc2lvbiI6IjIwMCIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbGltaXQiOiI5OTk5OTk5OTkiLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL21lbWJlcnNoaXAiOiJQcmVtaXVtIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9sYW5ndWFnZSI6ImVuLWdiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9leHBpcmF0aW9uIjoiMjA5OS0xMi0zMSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcHN0YXJ0IjoiMjAxNy0wMi0xMyIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hdXRoc2VydmljZS5wcmlhaWQuY2giLCJhdWQiOiJodHRwczovL2hlYWx0aHNlcnZpY2UucHJpYWlkLmNoIiwiZXhwIjoxNDg3NjUwODEyLCJuYmYiOjE0ODc2NDM2MTJ9.r5cyzeP1KKhTcpFUWHyNbryaOmOT8b23t6LxSZfdkJo';
+    vm.token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImJyaXR0YW55aGVycjIwMThAdS5ub3J0aHdlc3Rlcm4uZWR1Iiwicm9sZSI6IlVzZXIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiIxMTcwIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy92ZXJzaW9uIjoiMjAwIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9saW1pdCI6Ijk5OTk5OTk5OSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcCI6IlByZW1pdW0iLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL2xhbmd1YWdlIjoiZW4tZ2IiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL2V4cGlyYXRpb24iOiIyMDk5LTEyLTMxIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9tZW1iZXJzaGlwc3RhcnQiOiIyMDE3LTAyLTEzIiwiaXNzIjoiaHR0cHM6Ly9zYW5kYm94LWF1dGhzZXJ2aWNlLnByaWFpZC5jaCIsImF1ZCI6Imh0dHBzOi8vaGVhbHRoc2VydmljZS5wcmlhaWQuY2giLCJleHAiOjE0ODc2NTk2ODQsIm5iZiI6MTQ4NzY1MjQ4NH0.e8c7KKPFYl_cTkzNqiOehthoQ9HYzUO0yZPwCJXlufQ';
     tokenFactory.storeToken(vm.token);
 
 
@@ -158,7 +160,6 @@ app.controller('LookupCtrl', [
 
     //  LOAD THE BODY LOCATIONS #1
     vm.loadBodyLocations = function () {     
-      console.log('yay');
       var url = apiUrls.loadBodyLocations;
       generic_api_call(url, 'bodyLocations','bodyLocationsError','bodyLocationsConfig');
      }
@@ -202,16 +203,18 @@ app.controller('LookupCtrl', [
       $scope.locationListed = true; 
     }
 
-    // FIRST CONTINUE BUTTON IS CLICKED
-    vm.Done = function(){
-      $scope.bodyLocationId = $scope.partList.bodyParts[0];
-      vm.loadBodySublocations($scope.bodyLocationId);
-    }
 
-    // SECOND CONTINUE BUTTON IS CLICKED
-    vm.DoneSub = function(){
-      $scope.bodySublocationId = $scope.partList.subbodyParts[0];
-      vm.loadBodySublocationSymptoms($scope.bodySublocationId, $scope.selectorStatus);
+    vm.Done = function() {
+      // console.log($scope.continue);
+      if (!$scope.continue) { // FIRST CONTINUE
+        $scope.continue = true;
+        $scope.bodyLocationId = $scope.partList.bodyParts[0];
+        vm.loadBodySublocations($scope.bodyLocationId);
+      } else {  // SECOND CONTINUE
+        $scope.continue = false;
+        $scope.bodySublocationId = $scope.partList.subbodyParts[0];
+        vm.loadBodySublocationSymptoms($scope.bodySublocationId, $scope.selectorStatus);
+      } 
     }
 
 // LIST OF BODY AND SUB BODY PARTS GENERATED FROM THE API
@@ -228,8 +231,11 @@ app.controller('LookupCtrl', [
   // CREATE LIST OF DIAGNOSIS NAMES TO BE DISPLAYED
   vm.showSymptoms = function(symList){
     for (var i = 0; i < symList.data.length; i++) {
-      var x = symList.data[i].Issue.Name;
-      $scope.symptomNames.push(x);
+      var x = symList.data[i].Issue;
+      if ($scope.symptomNames.indexOf(x.Name) == -1) { // eliminates redundancy
+        $scope.symptomNames.push(x.Name);
+        $scope.symptomList.push(x);
+      }
     }
     console.log($scope.symptomNames);
   }

@@ -197,14 +197,16 @@
 
                     <div class="row">
                         <div class="col-md-4">
-                            <div class="alert alert-success" ng-show="diagnosis != ''">
-                               <pre class="data">{{symptomNames}}</pre>
+                            <div class="diagnosis-result" ng-show="diagnosis != ''">
+                              <h4>Possible conditions</h4>
+                              <div ng-repeat="condition in symptomList | orderBy: '-Accuracy'">
+                                {{condition.Name}}
+                              </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button ng-show="locationListed" ng-click="Done()" style="margin-right: 10px">Continue</button>
-                <button ng-show="locationListed" ng-click="DoneSub()" style="margin-right: 30px">Continue</button>
+                <button ng-show="locationListed" ng-click="Done()" style="margin-right: 30px">Continue</button>
                 <div class="alert alert-danger" ng-show="bodyLocationsError != ''">
                     <pre class="data">{{bodyLocationsError | json}}</pre>
                 </div>
