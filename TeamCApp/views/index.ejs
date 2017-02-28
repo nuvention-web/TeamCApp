@@ -9,6 +9,8 @@
     <script src="/scripts/factories/tokenFactory.js"></script>
     <script src="/scripts/factories/languageFactory.js"></script>
     <script src="/scripts/factories/formatFactory.js"></script>
+    <script src="checklist-model-master/checklist-model.js"></script>
+
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
@@ -31,7 +33,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li ng-class="{ active: isActive('/')}"><a href="/">HOME</a></li>
-            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">DIAGNOSE</a></li>
+            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">CHECK SYMPTOMS</a></li>
             <li ng-class="{ active: isActive('/')}"><a href="/">SYMPTOMS</a></li>
             <li ng-class="{ active: isActive('#talking')}"><a href="#/talking">TALKING POINTS</a></li>
             <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">NOTES</a></li>
@@ -146,7 +148,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li ng-class="{ active: isActive('/')}"><a href="/">HOME</a></li>
-            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">DIAGNOSE</a></li>
+            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">CHECK SYMPTOMS</a></li>
             <li ng-class="{ active: isActive('/')}"><a href="/">SYMPTOMS</a></li>
             <li ng-class="{ active: isActive('#talking')}"><a href="#/talking">TALKING POINTS</a></li>
             <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">NOTES</a></li>
@@ -160,52 +162,58 @@
 
 <!-- Get Diagnosis Based on Symptoms -->
       <div class="container">
-       
-          <div class="panel panel-info">
+
+          <h4 class="page-header"> Please follow the instructions to check your symptoms. </h4>
+
+
+            <!-- BODY LOCATION -->
+            <div class="panel panel-info">
             <div class="panel-heading">
-                <a ng-click="loadDiagnosis(selectedSymptoms,gender,yearOfBirth)" role="button" class="btn btn-success">
-                    Get Diagnosis
-                </a>
-                <a ng-click="loadDiagnosis(selectedSymptoms,gender,yearOfBirth)" role="button">
-                   
-                </a>
-                <div class="pull-right">
-                    Symptoms (comma separated ids):<input type='text' ng-model='selectedSymptoms' />
-                    |
-                    <label>
-                        <input type="radio" ng-model="gender.value" value="male">
-                        Male
-                    </label>
-                    <label>
-                        <input type="radio" ng-model="gender.value" value="female">
-                        Female
-                    </label>
-                    |
-                    Year of Birth:<input type='number' ng-model='yearOfBirth' class='single-number' />
-                </div>
+                <button ng-click="loadBodyLocations()" style="margin-right: 10px">
+                    List Body Parts
+                </button>
             </div>
             <div class="panel-body">
-                
+                <p ng-show="bodyLocations != ''">Please select the body location that is bothering you.</p>
+                <!-- <div> {{partList}} </div>  -->
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="alert alert-success" ng-show="diagnosis != ''">
-                            <pre class="data">{{diagnosis | json}}</pre>
+                  <!-- SHOW BODY PARTS -->
+                    <div class="col-md-4">
+                        <div ng-show="bodyLocations != ''">
+                            <div ng-repeat="bodyPart in bodyParts">
+                              <input type="checkbox" checklist-model="partList.bodyParts" checklist-value="bodyPart.ID"> {{bodyPart.Name}}
+                            </div>
                         </div>
                     </div>
-                    <!-- <div class="col-md-6">
-                        <div class="alert alert-warning" ng-show="diagnosisConfig != ''">
-                            <pre class="data">{{diagnosisConfig | json}}</pre>
+                    <!--  SHOW SUB BODY PARTS -->
+                    <div class="col-md-4">
+                        <div ng-show="bodyLocations != ''">
+                            <div ng-repeat="subbodyPart in subbodyParts">
+                              <input type="checkbox" checklist-model="partList.subbodyParts" checklist-value="subbodyPart.ID"> {{subbodyPart.Name}}
+                            </div>
                         </div>
-                    </div> -->
+                    </div>
+                    <!-- SHOW LIST OF SYMPTOMS -->
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="diagnosis-result" ng-show="diagnosis != ''">
+                              <h4>Possible conditions</h4>
+                              <div ng-repeat="condition in symptomList | orderBy: '-Accuracy'">
+                                {{condition.Name}}
+                              </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="alert alert-danger" ng-show="diagnosisError != ''">
-                    <pre class="data">{{diagnosisError | json}}</pre>
+                <button ng-show="locationListed" ng-click="Done()" style="margin-right: 30px">Continue</button>
+                <div class="alert alert-danger" ng-show="bodyLocationsError != ''">
+                    <pre class="data">{{bodyLocationsError | json}}</pre>
                 </div>
             </div>
-        </div>
+          </div>
+       </div>
       </div>
-      </div>
-
     </script>
   </body>
 </html>
