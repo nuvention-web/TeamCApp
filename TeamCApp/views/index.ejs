@@ -9,7 +9,10 @@
     <script src="/scripts/factories/tokenFactory.js"></script>
     <script src="/scripts/factories/languageFactory.js"></script>
     <script src="/scripts/factories/formatFactory.js"></script>
+    <script src="/scripts/hmac-md5.js"></script>
+    <script src="/scripts/enc-base64-min.js"></script>
     <script src="checklist-model-master/checklist-model.js"></script>
+
 
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
@@ -162,10 +165,30 @@
 
 <!-- Get Diagnosis Based on Symptoms -->
       <div class="container">
-        <h4 class="page-header"> Please follow the instructions to check your symptoms. </h4>
+      <div class="panel panel-default" ng-show="loginbefore">
+            <div class="panel-heading">
+                Please Login
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" ng-model="username" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" ng-model="password" placeholder="Password">
+                        </div>
+                        <button type="submit" ng-click="getToken()">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4 class="page-header" ng-hide="loginbefore" > Please follow the instructions to check your symptoms. </h4>
 
             <!-- BODY LOCATION -->
-          <div class="panel panel-info">
+          <div class="panel panel-info" ng-hide="loginbefore">
             <div class="panel-heading">
                 <button ng-click="loadBodyLocations()" style="margin-right: 10px">
                     List Body Parts

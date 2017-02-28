@@ -131,15 +131,20 @@ app.controller('LookupCtrl', [
     vm.format = vm.formats[0].value;
     
     // TOKEN HARD CODED
-    vm.token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImtpdHR5LnIubGl1QGdtYWlsLmNvbSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiMTE3MSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdmVyc2lvbiI6IjIwMCIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbGltaXQiOiI5OTk5OTk5OTkiLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL21lbWJlcnNoaXAiOiJQcmVtaXVtIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9sYW5ndWFnZSI6ImVuLWdiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9leHBpcmF0aW9uIjoiMjA5OS0xMi0zMSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcHN0YXJ0IjoiMjAxNy0wMi0xMyIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hdXRoc2VydmljZS5wcmlhaWQuY2giLCJhdWQiOiJodHRwczovL2hlYWx0aHNlcnZpY2UucHJpYWlkLmNoIiwiZXhwIjoxNDg4MjY2NTY5LCJuYmYiOjE0ODgyNTkzNjl9.UvMOZexw088JklJApTugfpFXP-ZcldxNbYsE1EfwRAY';
+    vm.token = '';
     tokenFactory.storeToken(vm.token);
 
 
+    vm.username = '';
+    vm.password = '';
+    vm.error = '';
+    vm.loginbefore = true;
     vm.getToken = function () {
-            var computedHash = CryptoJS.HmacMD5(apiUrls.authServiceUrl, vm.password);
-            var computedHashString = computedHash.toString(CryptoJS.enc.Base64);
+        var uri = "https://sandbox-authservice.priaid.ch/login";
+        var computedHash = CryptoJS.HmacMD5(uri, vm.password);
+        var computedHashString = computedHash.toString(CryptoJS.enc.Base64);
         apiServices.makeRequest({
-            URL: apiUrls.authServiceUrl,
+            URL: uri,
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + vm.username + ':' + computedHashString
@@ -149,6 +154,7 @@ app.controller('LookupCtrl', [
                     console.log(data);
                     vm.token = data.data.Token;
                     vm.error = '';
+                    vm.loginbefore = false;
                 }, function (data) {
                     console.log('error', data);
                     vm.error = data.data;
@@ -257,16 +263,16 @@ app.controller('LookupCtrl', [
 
 
 
-    // $scope.$watch(
-    //   function watchToken( scope ) {
-    //     // Return the "result" of the watch expression.
-    //     return( vm.token );
-    //   },
-    //   function handleTokenChange( newValue, oldValue ) {
-    //     tokenFactory.storeToken(newValue);
-    //     console.log( "fn( vm.token ):", newValue );
-    //   }
-    // );
+    $scope.$watch(
+      function watchToken( scope ) {
+        // Return the "result" of the watch expression.
+        return( vm.token );
+      },
+      function handleTokenChange( newValue, oldValue ) {
+        tokenFactory.storeToken(newValue);
+        console.log( "fn( vm.token ):", newValue );
+      }
+    );
     
     function generic_api_call(url, scope_variable_name, scope_error_variable_name, scope_config_variable_name)
     {
