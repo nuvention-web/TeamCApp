@@ -120,7 +120,7 @@ app.controller('LookupCtrl', [
     vm.redFlagTextError = '';
     vm.symptomId = 238;
 
-    vm.continue = false; // false = do first continue, true = do second continue
+    vm.continueStep = 1;
     
     vm.languages=[{value:"en-gb",name:"en-gb"},{value:"de-ch",name:"de-ch"},{value:"fr-fr",name:"fr-fr"},{value:"es-es",name:"es-es"},{value:"tr-tr",name:"tr-tr"}]
     //Setting first option as selected in configuration select
@@ -131,7 +131,7 @@ app.controller('LookupCtrl', [
     vm.format = vm.formats[0].value;
     
     // TOKEN HARD CODED
-    vm.token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImtpdHR5LnIubGl1QGdtYWlsLmNvbSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiMTE3MSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdmVyc2lvbiI6IjIwMCIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbGltaXQiOiI5OTk5OTk5OTkiLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL21lbWJlcnNoaXAiOiJQcmVtaXVtIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9sYW5ndWFnZSI6ImVuLWdiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9leHBpcmF0aW9uIjoiMjA5OS0xMi0zMSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcHN0YXJ0IjoiMjAxNy0wMi0xMyIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hdXRoc2VydmljZS5wcmlhaWQuY2giLCJhdWQiOiJodHRwczovL2hlYWx0aHNlcnZpY2UucHJpYWlkLmNoIiwiZXhwIjoxNDg4MjUxMTkwLCJuYmYiOjE0ODgyNDM5OTB9.PxHi9wS_1QLhgh0FEgTK_xKbW46rZH5I9DapA-d4o5g';
+    vm.token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImtpdHR5LnIubGl1QGdtYWlsLmNvbSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiMTE3MSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdmVyc2lvbiI6IjIwMCIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbGltaXQiOiI5OTk5OTk5OTkiLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL21lbWJlcnNoaXAiOiJQcmVtaXVtIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9sYW5ndWFnZSI6ImVuLWdiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9leHBpcmF0aW9uIjoiMjA5OS0xMi0zMSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcHN0YXJ0IjoiMjAxNy0wMi0xMyIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hdXRoc2VydmljZS5wcmlhaWQuY2giLCJhdWQiOiJodHRwczovL2hlYWx0aHNlcnZpY2UucHJpYWlkLmNoIiwiZXhwIjoxNDg4MjY2NTY5LCJuYmYiOjE0ODgyNTkzNjl9.UvMOZexw088JklJApTugfpFXP-ZcldxNbYsE1EfwRAY';
     tokenFactory.storeToken(vm.token);
 
 
@@ -180,7 +180,8 @@ app.controller('LookupCtrl', [
     //  LOAD THE DIAGNOSIS #4
     vm.loadDiagnosis = function (selectedSymptoms, gender, yearOfBirth) {
       $scope.loadDiag = true;
-      var symptoms = selectedSymptoms.split(',');
+      console.log('selectedSymptoms is', selectedSymptoms, ' with type of ', typeof selectedSymptoms);
+      var symptoms = selectedSymptoms;// .split(',');
       var url = apiUrls.loadDiagnosis+'?symptoms='+JSON.stringify(symptoms)+'&gender='+gender.value+'&year_of_birth='+yearOfBirth;
       generic_api_call(url, 'diagnosis','diagnosisError','diagnosisConfig');
     }
@@ -188,13 +189,17 @@ app.controller('LookupCtrl', [
 
     // GENERATE A LIST OF INFORMATION TO DISPLAY AFTER API IS CALLED
     vm.listBodyLocations = function (bodyLocations) {
-
-     if ($scope.subSymptoms == true) {  // LOADING SUB BODY SYMPTOMS #3, #4
-          for (var i = 0; i < $scope.bodySublocationSymptoms.length; i++) {
-              vm.loadDiagnosis($scope.bodySublocationSymptoms[i].ID.toString(), $scope.gender, $scope.yearOfBirth);
+      if ($scope.loadDiag) { 
+        console.log('hello');
+          for (var i = 0; i < $scope.symptomId.length; i++) {
+            // vm.loadDiagnosis($scope.bodySublocationSymptoms[i].ID.toString(), $scope.gender, $scope.yearOfBirth);
+            vm.loadDiagnosis($scope.symptomId[i].ID.toString(), $scope.gender, $scope.yearOfBirth);
           }
-          $scope.subSymptoms = false;
-      } else if ($scope.subBody == true) { // LOADING SUB BODY PARTS #2
+          $scope.loadDiag = false;
+      } else if ($scope.subSymptoms) { // Loading sub bodypart symptoms #3
+        $scope.subPartSymptoms = bodyLocations; 
+        $scope.subSymptoms = false;
+      } else if ($scope.subBody) { // LOADING SUB BODY PARTS #2
          $scope.subbodyParts = bodyLocations;
          $scope.subBody = false;
       } else { // LOADING BODY PARTS #1
@@ -203,24 +208,33 @@ app.controller('LookupCtrl', [
       $scope.locationListed = true; 
     }
 
+    vm.continue = function () {
+      switch($scope.continueStep) {
+        case 1:
+          $scope.continueStep = 2;
+          $scope.bodyLocationId = $scope.partList.bodyParts[0];
+          vm.loadBodySublocations($scope.bodyLocationId);
+          break;
+        case 2:
+          $scope.continueStep = 3;
+          $scope.bodySublocationId = $scope.partList.subbodyParts[0];
+          vm.loadBodySublocationSymptoms($scope.bodySublocationId, $scope.selectorStatus);
+          break;
+        case 3:
+          $scope.continueStep = 1;
+          $scope.symptomId = $scope.partList.subPartSymptoms;
+          console.log('symptomID is', $scope.symptomId, ' with type ', typeof $scope.symptomId);
+          vm.loadDiagnosis($scope.symptomId, $scope.gender, $scope.yearOfBirth);
+      }
+    } 
 
-    vm.Done = function() {
-      // console.log($scope.continue);
-      if (!$scope.continue) { // FIRST CONTINUE
-        $scope.continue = true;
-        $scope.bodyLocationId = $scope.partList.bodyParts[0];
-        vm.loadBodySublocations($scope.bodyLocationId);
-      } else {  // SECOND CONTINUE
-        $scope.continue = false;
-        $scope.bodySublocationId = $scope.partList.subbodyParts[0];
-        vm.loadBodySublocationSymptoms($scope.bodySublocationId, $scope.selectorStatus);
-      } 
-    }
+
 
 // LIST OF BODY AND SUB BODY PARTS GENERATED FROM THE API
   $scope.partList = {
     bodyParts: [],
-    subbodyParts: []
+    subbodyParts: [],
+    subPartSymptoms: []
   };
 
   $scope.symptomList = []; // ARRAY OF DIAGNOSIS OBJECTS
