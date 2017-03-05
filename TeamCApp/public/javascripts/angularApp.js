@@ -37,6 +37,24 @@ app.controller('TalkingCtrl', [
 app.controller('NotesCtrl', [
   '$scope',
   function($scope, $location){
+    // Questions
+    $scope.questions = [];
+    $scope.form = false;
+    $scope.addQuestion = function(){
+      $scope.questions.push({title: $scope.title});
+      console.log($scope.questions);
+    };
+    $scope.deleteQuestion = function(question){
+      $scope.questions.pop(question)
+    };
+    $scope.displayForm = function(){
+      $scope.form = !$scope.form;
+      console.log($scope.form);
+    };
+
+
+
+    // Notes
     $scope.notes = [];
     $scope.addNote = function(){
       $scope.notes.push({desc: $scope.desc});
@@ -44,6 +62,8 @@ app.controller('NotesCtrl', [
     $scope.deleteNote = function(note){
       $scope.notes.pop(note)
     };
+
+
   }]);
 
   // app.controller('HeaderController', ['$scope', '$location',

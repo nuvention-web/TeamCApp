@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+
+    <link rel="stylesheet" href="/images/font-awesome-4.7.0/css/font-awesome.min.css">
   </head>
 
   <body ng-app="flapperNews" ng-controller="MainCtrl">
@@ -105,6 +107,8 @@
     </div>
     </script>
 
+
+    <!-- Manage your doctor's visit -->
     <script type="text/ng-template" id="/notes.html">
     <div style="height:100px;"></div>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -121,27 +125,83 @@
         </div>
       </div>
     </nav>
-    <div class='notes page'>
-      <div class="page-header">
-        <h1>Notes</h1>
+    
+    <div class='col-md-1 visit-gap'></div>
+    <div class='visit-page col-md-10'>
+
+      <!-- <div class='col-md-1 visit-gap'></div> -->
+
+      <!-- Display date tabs -->
+      <div class='col-md-3 visit-date-section'>
+        <div class='visit-date'>
+          <h4>July 23, 2016</h4>
+        </div>
+        <div class='visit-date'>
+          <h4>October 1, 2016</h4>
+        </div>  
+        <div class='visit-date selected'>
+          <h4>February 27, 2017</h4>
+        </div>  
+        <div class='visit-date'>
+          <h4>April 31, 2017</h4>
+        </div>  
       </div>
-      <div class='lists'>
-        <ul>
-          <div ng-repeat="note in notes">
-            <li>
-              {{note.desc}}
-              <span ng-click="deleteNote(note)">Delete</span>
-            </li>
+
+      <div class='col-md-9 visit-inner-page'>
+      <!-- Ask your doctor about -->
+        <div class='col-md-6 visit-question-section'>
+          <h3>Ask your doctor about:</h3>
+          <p>
+            What are other signs of hypersensitivity I should look out for?
+            <span class='delete'><i class="fa fa-times-circle-o" aria-hidden="true"></i></span>
+          </p>
+          <p>
+            What are common environmental triggers?
+            <span class='delete'><i class="fa fa-times-circle-o" aria-hidden="true"></i></span>
+          </p>
+          <p>
+            Are there any home rememdies to alleviate my reactions?
+            <span class='delete'><i class="fa fa-times-circle-o" aria-hidden="true"></i></span>
+          </p>
+          <div ng-repeat="question in questions">
+            <p>
+              {{question.title}}
+              <span class='delete' ng-click="deleteQuestion(question)"><i class="fa fa-times-circle-o" aria-hidden="true"></i></span>
+            </p><!-- <span ng-click="deleteQuestion(question)">Delete</span> -->
           </div>
-        </ul>
+          <div class='display-form'>
+            <div class="visit-options" ng-click="displayForm()" ng-show="!form">
+              <p><i class="fa fa-plus-circle" aria-hidden="true"></i>Add a question</p>
+            </div>
+          </div>
+          <div class='question-form' ng-show="form">
+            <form ng-submit="addQuestion()">
+              <input type="text" placeholder="Enter your question" ng-model="title"></input>
+              <br>
+              <button type="submit" ng-click="displayForm()">Add</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Notes from the visit -->
+        <div class='col-md-6 visit-notes-section'>
+          <h3>Notes from the visit:</h3>
+          <div class='visit-options'>
+            <p><i class="fa fa-plus" aria-hidden="true"></i>Start taking notes</p>
+          </div>
+          <div class='visit-options'>
+            <p><i class="fa fa-microphone" aria-hidden="true"></i> Record voice memo</p>
+          </div>
+          <div class='visit-options'>
+            <p><i class="fa fa-camera" aria-hidden="true"></i> Take a photo</p>
+          </div>
+        </div>
       </div>
-      <h2>Add note</h2>
-        <form ng-submit="addNote()">
-          <input type="text" placeholder="Desc" ng-model="desc"></input>
-          <br>
-          <button type="submit">Add</button>
-        </form>
-      </div>
+
+      <!-- <div class='col-md-1 visit-gap'></div> -->
+    </div>
+    <div class='col-md-1 visit-gap'></div>
+
     </script>
 
     <!-- Lookup view -->
