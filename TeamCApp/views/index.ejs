@@ -34,40 +34,102 @@
     <script type="text/ng-template" id="/home.html">
     <div style="height:100px;"></div>
     <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <img alt="Brand" src="/images/logo.png" height="20">
+          </a>
+       </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li ng-class="{ active: isActive('/')}"><a href="/">HOME</a></li>
-            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">CHECK SYMPTOMS</a></li>
-            <li ng-class="{ active: isActive('/')}"><a href="/">SYMPTOMS</a></li>
-            <li ng-class="{ active: isActive('#talking')}"><a href="#/talking">TALKING POINTS</a></li>
-            <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">NOTES</a></li>
-            <li ng-class="{ active: isActive('/')}"><a href="/">ACCOUNT</a></li>
+          <ul class="nav navbar-nav navbar-right">
+            <li ng-class="{ active: isActive('/')}" class='active'><a href="/">Home</a></li>
+            <li ng-class="{ active: isActive('#profile')}"><a href="#/profile">Profile</a></li>
+            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">Check Symptoms</a></li>
+            <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">Notes</a></li>
           </ul>
         </div>
       </div>
     </nav>
       <div class='welcome page'>
+        <img src="/images/logo.png" height="100">
         <div class='page-header'>
-          <h1>Welcome</h1>
+          <h3> Connecting the pieces for your doctor vists. </h1>
         </div>
-          <h4>Your personalized health app portal</h4>
+        
       </div>
     </script>
+
+
+  <!-- PROFILE PAGE -->
+    <script type="text/ng-template" id="/profile.html">
+    <div style="height:100px;"></div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <img alt="Brand" src="/images/logo.png" height="20">
+          </a>
+       </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li ng-class="{ active: isActive('/')}"><a href="/">Home</a></li>
+            <li ng-class="{ active: isActive('#profile')}" class='active'><a href="#/profile">Profile</a></li>
+            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">Check Symptoms</a></li>
+            <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">Notes</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <div class='col-md-1 visit-gap'></div>
+    <div class='visit-page col-md-10'>
+
+      <!-- <div class='col-md-1 visit-gap'></div> -->
+
+      <!-- Display date tabs -->
+      <div class='col-md-9 visit-date-section'>
+      <br>
+        <div class='col-md-3'>
+          <img class="img-circle" src="/images/David.jpg" width="200"> 
+        </div>
+        <div class='col-md-1 visit-gap'></div>
+        <div class='col-md-8'>
+          <h3> David</h3>
+          <p> David is a ....</p>
+          <h3> Medical History</h3>
+           <p> David is a ....</p>
+          <h3> Medications</h3>
+           <p> David is a ....</p>
+        </div>
+      </div>
+
+      <div class='col-md-3 visit-inner-page'>
+      <h3> Health Tips For You </h3>
+     
+      </div>
+    <div class='col-md-1 visit-gap'></div>
+    
+    </script>
+
+
 
     <!-- Talking points -->
     <script type="text/ng-template" id="/talking.html">
     <div style="height:100px;"></div>
     <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <img alt="Brand" src="/images/logo.png" height="20">
+          </a>
+       </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li ng-class="{ active: isActive('/')}"><a href="/">HOME</a></li>
-            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">DIAGNOSE</a></li>
-            <li ng-class="{ active: isActive('/')}"><a href="/">SYMPTOMS</a></li>
-            <li ng-class="{ active: isActive('#talking')}"><a href="#/talking">TALKING POINTS</a></li>
-            <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">NOTES</a></li>
-            <li ng-class="{ active: isActive('/')}"><a href="/">ACCOUNT</a></li>
+          <ul class="nav navbar-nav navbar-right">
+            <li ng-class="{ active: isActive('/')}"><a href="/">Home</a></li>
+            <li ng-class="{ active: isActive('#profile')}"><a href="#/profile">Profile</a></li>
+            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">Check Symptoms</a></li>
+            <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">Notes</a></li>
           </ul>
         </div>
       </div>
@@ -112,15 +174,18 @@
     <script type="text/ng-template" id="/notes.html">
     <div style="height:100px;"></div>
     <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <img alt="Brand" src="/images/logo.png" height="20">
+          </a>
+       </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li ng-class="{ active: isActive('/')}"><a href="/">HOME</a></li>
-            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">DIAGNOSE</a></li>
-            <li ng-class="{ active: isActive('/')}"><a href="/">SYMPTOMS</a></li>
-            <li ng-class="{ active: isActive('#talking')}"><a href="#/talking">TALKING POINTS</a></li>
-            <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">NOTES</a></li>
-            <li ng-class="{ active: isActive('/')}"><a href="/">ACCOUNT</a></li>
+          <ul class="nav navbar-nav navbar-right">
+            <li ng-class="{ active: isActive('/')}"><a href="/">Home</a></li>
+            <li ng-class="{ active: isActive('#profile')}"><a href="#/profile">Profile</a></li>
+            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">Check Symptoms</a></li>
+            <li ng-class="{ active: isActive('#notes')}" class='active'><a href="#/notes">Notes</a></li>
           </ul>
         </div>
       </div>
@@ -207,15 +272,18 @@
     <!-- Lookup view -->
     <script type="text/ng-template" id="/lookup.html">
       <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <img alt="Brand" src="/images/logo.png" height="20">
+          </a>
+       </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li ng-class="{ active: isActive('/')}"><a href="/">HOME</a></li>
-            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">CHECK SYMPTOMS</a></li>
-            <li ng-class="{ active: isActive('/')}"><a href="/">SYMPTOMS</a></li>
-            <li ng-class="{ active: isActive('#talking')}"><a href="#/talking">TALKING POINTS</a></li>
-            <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">NOTES</a></li>
-            <li ng-class="{ active: isActive('/')}"><a href="/">ACCOUNT</a></li>
+          <ul class="nav navbar-nav navbar-right">
+            <li ng-class="{ active: isActive('/')}" ><a href="/">Home</a></li>
+            <li ng-class="{ active: isActive('#profile')}"><a href="#/profile">Profile</a></li>
+            <li ng-class="{ active: isActive('#lookup')}" class='active'><a href="#/lookup">Check Symptoms</a></li>
+            <li ng-class="{ active: isActive('#notes')}" ><a href="#/notes">Notes</a></li>
           </ul>
         </div>
       </div>

@@ -9,6 +9,32 @@ function($scope, $location){
 
 }]);
 
+
+app.controller('ProfileCtrl', [
+  '$scope',
+  function($scope, $location){
+    $scope.points = [];
+    $scope.completed = [];
+    $scope.addPoint = function(){
+      if(!$scope.title || $scope.title === '') { return; }
+      $scope.points.push({title: $scope.title, priority: 1});
+    };
+    $scope.incrementPriority = function(point) {
+      point.priority += 1;
+    };
+    $scope.decrementPriority = function(point) {
+      point.priority -= 1;
+    };
+    $scope.completedPoint = function(point) {
+      $scope.points.pop(point);
+      $scope.completed.push(point);
+    };
+    $scope.undoComplete = function(point) {
+      $scope.points.push(point);
+      $scope.completed.pop(point);
+    };
+  }]);
+
 app.controller('TalkingCtrl', [
   '$scope',
   function($scope, $location){
@@ -340,6 +366,13 @@ function($stateProvider, $urlRouterProvider) {
       url: '/home',
       templateUrl: '/home.html',
       controller: 'MainCtrl'
+    });
+
+  $stateProvider   
+    .state('profile', {
+      url: '/profile',
+      templateUrl: '/profile.html',
+      controller: 'ProfileCtrl'
     });
   
   $stateProvider   
