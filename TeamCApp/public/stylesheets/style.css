@@ -211,7 +211,7 @@ input {
 	flex-direction: row;
 	border: 1px solid #d1d2d4;
 	padding: 20px;
-	height: 75vh;
+	min-height: 500px;
 } 
 
 .visit-inner-page {
@@ -278,6 +278,17 @@ input {
 
 
 /*PROFILE SECTION*/
+.profile {
+	border-right: 1px solid #d1d2d4;
+}
+
+.profile-page {
+	border: 1px solid #d1d2d4;
+	display: flex;
+	flex-direction: row;
+	padding: 15px;
+}
+
 .profile-page h3 {
 	color: #939598;
 	margin-top: 0px;
@@ -285,7 +296,7 @@ input {
 }
 
 .profile h3 {
-	margin-top: 20px;
+	margin-top: 10px;
 	font-size: 20px;
 }
 
@@ -293,10 +304,17 @@ input {
 	margin: 2px;
 }
 
+.profile .visit-options {
+	position: absolute;
+	bottom: 0;
+	right: 20;
+}
+
 .profile-tips {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
+	margin-left: 30px;
 }
 
 .profile-tips p {
@@ -314,7 +332,6 @@ input {
 	display: flex;
 	flex-direction: row;
 	border: 1px solid #d1d2d4;
-	height: 75vh;
 	min-height: 500px;
 }
 
