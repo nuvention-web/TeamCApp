@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-	var baseUrl = 'https://sandbox-healthservice.priaid.ch/';
+	var baseUrl = 'https://healthservice.priaid.ch/';
     angular
       .module('apiUrls',[])
 	  .constant('apiUrls', {

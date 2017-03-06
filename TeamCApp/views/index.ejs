@@ -56,13 +56,12 @@
           <h3> Connecting the pieces for your doctor vists. </h1>
         </div>
       </div>
-       <div class="panel panel-default">
-            <div class="panel-heading">
-                Please Login
-            </div>
+      <div class="row">
+      <div class="col-md-4"></div>
+       <div class="panel panel-default col-md-4">
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label for="username">Username</label>
                             <input type="text" class="form-control" ng-model="username" placeholder="Username">
@@ -71,11 +70,12 @@
                             <label for="password">Password</label>
                             <input type="password" class="form-control" ng-model="password" placeholder="Password">
                         </div>
-                        <button type="submit" ng-click="getToken()">Login</button>
+                        <button type="submit" ng-click="getToken()" >Login</button>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-md-4"></div>
     </script>
 
 

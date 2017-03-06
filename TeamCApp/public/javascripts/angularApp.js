@@ -17,7 +17,7 @@ function($scope, $http, apiServices, tokenFactory, languageFactory, formatFactor
     vm.error = '';
     vm.loginbefore = true;
     vm.getToken = function () {
-        var uri = "https://sandbox-authservice.priaid.ch/login";
+        var uri = "https://authservice.priaid.ch/login";
         var computedHash = CryptoJS.HmacMD5(uri, vm.password);
         var computedHashString = computedHash.toString(CryptoJS.enc.Base64);
         apiServices.makeRequest({
@@ -32,6 +32,7 @@ function($scope, $http, apiServices, tokenFactory, languageFactory, formatFactor
                 vm.token = data.data.Token;
                 vm.error = '';
                 vm.loginbefore = false;
+                console.log($location.path('/profile'));
             }, function (data) {
                 console.log('error', data);
                 vm.error = data.data;
