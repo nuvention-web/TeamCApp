@@ -55,8 +55,27 @@
         <div class='page-header'>
           <h3> Connecting the pieces for your doctor vists. </h1>
         </div>
-        
       </div>
+       <div class="panel panel-default">
+            <div class="panel-heading">
+                Please Login
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" ng-model="username" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" ng-model="password" placeholder="Password">
+                        </div>
+                        <button type="submit" ng-click="getToken()">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </script>
 
 
@@ -293,7 +312,7 @@
 
 <!-- Get Diagnosis Based on Symptoms -->
       <div class="container">
-      <div class="panel panel-default" ng-show="loginbefore">
+      <!-- <div class="panel panel-default" ng-show="loginbefore">
             <div class="panel-heading">
                 Please Login
             </div>
@@ -312,11 +331,11 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <h4 class="page-header" ng-hide="loginbefore" > Please follow the instructions to check your symptoms. </h4>
+        </div> -->
+        <h4 class="page-header"  > Please follow the instructions to check your symptoms. </h4>
 
             <!-- BODY LOCATION -->
-          <div class="panel panel-info" ng-hide="loginbefore">
+          <div class="panel panel-info" >
             <div class="panel-heading">
                 <button ng-click="loadBodyLocations()" style="margin-right: 10px">
                     List Body Parts

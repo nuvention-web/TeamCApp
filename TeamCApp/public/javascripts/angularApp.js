@@ -1,11 +1,54 @@
 var app = angular.module('flapperNews', ['ui.router', 'apiServices', 'tokenFactory', 'languageFactory', 'formatFactory', 'apiUrls', 'checklist-model']);
 
 app.controller('MainCtrl', [
-'$scope', '$location',
-function($scope, $location){
+'$scope','$http',
+  'apiServices', 'tokenFactory', 'languageFactory', 'formatFactory', 'apiUrls', '$location',
+function($scope, $http, apiServices, tokenFactory, languageFactory, formatFactory, apiUrls, $location){
  $scope.isActive = function (viewLocation) { 
     return viewLocation === $location.path();
   };
+
+   var vm = $scope;
+  vm.token = '';
+  tokenFactory.storeToken(vm.token);
+
+    vm.username = '';
+    vm.password = '';
+    vm.error = '';
+    vm.loginbefore = true;
+    vm.getToken = function () {
+        var uri = "https://sandbox-authservice.priaid.ch/login";
+        var computedHash = CryptoJS.HmacMD5(uri, vm.password);
+        var computedHashString = computedHash.toString(CryptoJS.enc.Base64);
+        apiServices.makeRequest({
+            URL: uri,
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + vm.username + ':' + computedHashString
+            }
+        })
+            .then(function (data) {
+                console.log(data);
+                vm.token = data.data.Token;
+                vm.error = '';
+                vm.loginbefore = false;
+            }, function (data) {
+                console.log('error', data);
+                vm.error = data.data;
+                vm.token = '';
+                return false;
+            });
+    }
+    $scope.$watch(
+      function watchToken( scope ) {
+        // Return the "result" of the watch expression.
+        return( vm.token );
+      },
+      function handleTokenChange( newValue, oldValue ) {
+        tokenFactory.storeToken(newValue);
+        console.log( "fn( vm.token ):", newValue );
+      }
+    );
 
 }]);
 
@@ -176,38 +219,37 @@ app.controller('LookupCtrl', [
     //Setting first option as selected in configuration select
     vm.format = vm.formats[0].value;
     
-    // TOKEN HARD CODED
-    vm.token = '';
-    tokenFactory.storeToken(vm.token);
+    // vm.token = '';
+    // tokenFactory.storeToken(vm.token);
 
 
-    vm.username = '';
-    vm.password = '';
-    vm.error = '';
-    vm.loginbefore = true;
-    vm.getToken = function () {
-        var uri = "https://sandbox-authservice.priaid.ch/login";
-        var computedHash = CryptoJS.HmacMD5(uri, vm.password);
-        var computedHashString = computedHash.toString(CryptoJS.enc.Base64);
-        apiServices.makeRequest({
-            URL: uri,
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + vm.username + ':' + computedHashString
-            }
-        })
-                .then(function (data) {
-                    console.log(data);
-                    vm.token = data.data.Token;
-                    vm.error = '';
-                    vm.loginbefore = false;
-                }, function (data) {
-                    console.log('error', data);
-                    vm.error = data.data;
-                    vm.token = '';
-                    return false;
-                });
-    }
+    // vm.username = '';
+    // vm.password = '';
+    // vm.error = '';
+    // vm.loginbefore = true;
+    // vm.getToken = function () {
+    //     var uri = "https://sandbox-authservice.priaid.ch/login";
+    //     var computedHash = CryptoJS.HmacMD5(uri, vm.password);
+    //     var computedHashString = computedHash.toString(CryptoJS.enc.Base64);
+    //     apiServices.makeRequest({
+    //         URL: uri,
+    //         method: 'POST',
+    //         headers: {
+    //             'Authorization': 'Bearer ' + vm.username + ':' + computedHashString
+    //         }
+    //     })
+    //             .then(function (data) {
+    //                 console.log(data);
+    //                 vm.token = data.data.Token;
+    //                 vm.error = '';
+    //                 vm.loginbefore = false;
+    //             }, function (data) {
+    //                 console.log('error', data);
+    //                 vm.error = data.data;
+    //                 vm.token = '';
+    //                 return false;
+    //             });
+    // }
 
 
     //  LOAD THE BODY LOCATIONS #1
@@ -309,16 +351,16 @@ app.controller('LookupCtrl', [
 
 
 
-    $scope.$watch(
-      function watchToken( scope ) {
-        // Return the "result" of the watch expression.
-        return( vm.token );
-      },
-      function handleTokenChange( newValue, oldValue ) {
-        tokenFactory.storeToken(newValue);
-        console.log( "fn( vm.token ):", newValue );
-      }
-    );
+    // $scope.$watch(
+    //   function watchToken( scope ) {
+    //     // Return the "result" of the watch expression.
+    //     return( vm.token );
+    //   },
+    //   function handleTokenChange( newValue, oldValue ) {
+    //     tokenFactory.storeToken(newValue);
+    //     console.log( "fn( vm.token ):", newValue );
+    //   }
+    // );
     
     function generic_api_call(url, scope_variable_name, scope_error_variable_name, scope_config_variable_name)
     {
