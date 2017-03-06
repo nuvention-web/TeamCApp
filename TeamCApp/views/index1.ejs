@@ -1,0 +1,276 @@
+<html>
+  <head>
+    <title>My Angular App!</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
+    <script src="/javascripts/angularApp.js"></script>
+    <script src="/scripts/utils/apiurls.js"></script>
+    <script src="/scripts/services/apiServices.js"></script>
+    <script src="/scripts/factories/tokenFactory.js"></script>
+    <script src="/scripts/factories/languageFactory.js"></script>
+    <script src="/scripts/factories/formatFactory.js"></script>
+    <script src="/scripts/hmac-md5.js"></script>
+    <script src="/scripts/enc-base64-min.js"></script>
+    <script src="checklist-model-master/checklist-model.js"></script>
+
+
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  </head>
+
+  <body ng-app="flapperNews" ng-controller="MainCtrl">
+    <div class="row">
+      <div class="col-md-12">
+        <ui-view></ui-view>
+      </div>
+    </div>
+    <div ng-view></div>
+
+
+    <!-- Welcome page --> 
+    <script type="text/ng-template" id="/home.html">
+    <div style="height:100px;"></div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li ng-class="{ active: isActive('/')}"><a href="/">HOME</a></li>
+            <li ng-class="{ active: isActive('#profile')}"><a href="#/profile">PROFILE</a></li>
+            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">CHECK SYMPTOMS</a></li>
+            <li ng-class="{ active: isActive('/')}"><a href="/">SYMPTOMS</a></li>
+            <li ng-class="{ active: isActive('#talking')}"><a href="#/talking">TALKING POINTS</a></li>
+            <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">NOTES</a></li>
+            <li ng-class="{ active: isActive('/')}"><a href="/">ACCOUNT</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+      <div class='welcome page'>
+        <div class='page-header'>
+          <h1>Welcome</h1>
+        </div>
+          <h4>Your personalized health app portal</h4>
+      </div>
+    </script>
+
+
+  <!-- PROFILE PAGE -->
+    <script type="text/ng-template" id="/profile.html">
+    <div style="height:100px;"></div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li ng-class="{ active: isActive('/')}"><a href="/">HOME</a></li>
+             <li ng-class="{ active: isActive('#profile')}"><a href="#/profile">PROFILE</a></li>
+            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">CHECK SYMPTOMS</a></li>
+            <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">NOTES</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class='talking page'>
+      <div class="page-header">
+        <h1>Talking points</h1>
+      </div>
+    </div>
+    </script>
+
+
+
+    <!-- Talking points -->
+    <script type="text/ng-template" id="/talking.html">
+    <div style="height:100px;"></div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li ng-class="{ active: isActive('/')}"><a href="/">HOME</a></li>
+             <li ng-class="{ active: isActive('#profile')}"><a href="#/profile">PROFILE</a></li>
+            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">DIAGNOSE</a></li>
+            <li ng-class="{ active: isActive('/')}"><a href="/">SYMPTOMS</a></li>
+            <li ng-class="{ active: isActive('#talking')}"><a href="#/talking">TALKING POINTS</a></li>
+            <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">NOTES</a></li>
+            <li ng-class="{ active: isActive('/')}"><a href="/">ACCOUNT</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class='talking page'>
+      <div class="page-header">
+        <h1>Talking points</h1>
+      </div>
+      <div class='lists'>
+        <!-- Incomplete points -->
+        <ol>
+          <div ng-repeat="point in points | orderBy: '-priority'">
+            <li>
+              {{point.title}} [Priority {{point.priority}}]
+              <span ng-click="incrementPriority(point)">+</span>
+              <span ng-click="decrementPriority(point)">-</span>
+              <span ng-click="completedPoint(point)">Complete</span>
+            </li>
+          </div>
+        </ol>
+        <!-- Completed points -->
+        <ul>
+          <div ng-repeat="point in completed">
+            <li>
+              <span ng-click="undoComplete(point)">(Undo)</span>
+              {{point.title}} [Priority {{point.priority}}]
+            </li>
+          </div>
+        </ul>
+      </div>
+      <h2>Add point</h2>
+      <form ng-submit="addPoint()">
+        <input type="text" placeholder="Title" ng-model="title"></input>
+        <br>
+        <button type="submit">Add</button>
+      </form>
+    </div>
+    </script>
+
+    <script type="text/ng-template" id="/notes.html">
+    <div style="height:100px;"></div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li ng-class="{ active: isActive('/')}"><a href="/">HOME</a></li>
+            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">DIAGNOSE</a></li>
+            <li ng-class="{ active: isActive('/')}"><a href="/">SYMPTOMS</a></li>
+            <li ng-class="{ active: isActive('#talking')}"><a href="#/talking">TALKING POINTS</a></li>
+            <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">NOTES</a></li>
+            <li ng-class="{ active: isActive('/')}"><a href="/">ACCOUNT</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class='notes page'>
+      <div class="page-header">
+        <h1>Notes</h1>
+      </div>
+      <div class='lists'>
+        <ul>
+          <div ng-repeat="note in notes">
+            <li>
+              {{note.desc}}
+              <span ng-click="deleteNote(note)">Delete</span>
+            </li>
+          </div>
+        </ul>
+      </div>
+      <h2>Add note</h2>
+        <form ng-submit="addNote()">
+          <input type="text" placeholder="Desc" ng-model="desc"></input>
+          <br>
+          <button type="submit">Add</button>
+        </form>
+      </div>
+    </script>
+
+    <!-- Lookup view -->
+    <script type="text/ng-template" id="/lookup.html">
+      <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li ng-class="{ active: isActive('/')}"><a href="/">HOME</a></li>
+            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">CHECK SYMPTOMS</a></li>
+            <li ng-class="{ active: isActive('/')}"><a href="/">SYMPTOMS</a></li>
+            <li ng-class="{ active: isActive('#talking')}"><a href="#/talking">TALKING POINTS</a></li>
+            <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">NOTES</a></li>
+            <li ng-class="{ active: isActive('/')}"><a href="/">ACCOUNT</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <div style="height:100px;"></div>
+
+<!-- Get Diagnosis Based on Symptoms -->
+      <div class="container">
+      <div class="panel panel-default" ng-show="loginbefore">
+            <div class="panel-heading">
+                Please Login
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" ng-model="username" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" ng-model="password" placeholder="Password">
+                        </div>
+                        <button type="submit" ng-click="getToken()">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4 class="page-header" ng-hide="loginbefore" > Please follow the instructions to check your symptoms. </h4>
+
+            <!-- BODY LOCATION -->
+          <div class="panel panel-info" ng-hide="loginbefore">
+            <div class="panel-heading">
+                <button ng-click="loadBodyLocations()" style="margin-right: 10px">
+                    List Body Parts
+                </button>
+            </div>
+            <div class="panel-body">
+              <p ng-show="bodyLocations != ''">Please select the body location that is bothering you.</p>
+              <div class="row">
+
+                <!-- SHOW BODY PARTS -->
+                <div class="col-md-4">
+                  <div ng-show="bodyLocations != ''">
+                    <div ng-repeat="bodyPart in bodyParts">
+                      <input type="checkbox" checklist-model="partList.bodyParts" checklist-value="bodyPart.ID"> {{bodyPart.Name}}
+                    </div>
+                  </div>
+                </div>
+
+                <!--  SHOW SUB BODY PARTS -->
+                <div class="col-md-4">
+                  <div ng-show="bodyLocations != ''">
+                    <div ng-repeat="subbodyPart in subbodyParts">
+                      <input type="checkbox" checklist-model="partList.subbodyParts" checklist-value="subbodyPart.ID"> {{subbodyPart.Name}}
+                    </div>
+                  </div>
+                </div>
+                    
+                <!--  SHOW SYMPTOMS -->
+                <div class="col-md-4">
+                  <div ng-show="bodySublocationSymptoms != ''">
+                    <div ng-repeat="subPartSymptom in subPartSymptoms">
+                      <input type="checkbox" checklist-model="partList.subPartSymptoms" checklist-value="subPartSymptom.ID"> {{subPartSymptom.Name}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SHOW POSSIBLE CONDITIONS -->
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="diagnosis-result" ng-show="diagnosis != ''">
+                    <h4>Possible conditions</h4>
+                    <div ng-repeat="condition in symptomList | orderBy: '-Accuracy'">
+                      {{condition.Name}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button ng-show="locationListed" ng-click="continue()" style="margin-right: 30px">Continue</button>
+              <div class="alert alert-danger" ng-show="bodyLocationsError != ''">
+                  <pre class="data">{{bodyLocationsError | json}}</pre>
+              </div>
+            </div>
+          </div>
+       </div>
+    </script>
+  </body>
+</html>
