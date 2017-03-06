@@ -18,11 +18,11 @@ h1 {
 /* Button styles */
 
 button {
-	border: 2px solid #ffffff;
-	color: #ffffff;
+	border: 2px solid #939598;
+	color: #939598;
 	font-family: inherit;
 	font-size: 12px;
-	background: #B4BBCC;
+	background: #ffffff;
 	cursor: pointer;
 	padding: 5px 16px;
 	display: inline-block;
@@ -65,7 +65,8 @@ button:before {
 
 button:hover,
 button:active {
-	color: #dfdfdf;
+	color: #ffffff;
+	background-color: #939598;
 }
 
 button:hover:after,
@@ -281,4 +282,33 @@ input {
 	color: #939598;
 	margin-top: 0px;
 	margin-bottom: 20px;
+}
+
+
+/* SYMPTOMS PAGE */
+.symptoms-page {
+	display: flex;
+	flex-direction: row;
+	border: 1px solid #d1d2d4;
+	height: 75vh;
+	min-height: 500px;
+}
+
+.symptoms-step {
+	display: flex;
+	flex-direction: column;
+	border-right: 1px solid #d1d2d4;
+}
+
+.button-group {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	position: absolute;
+	bottom: 20px;
+	width: 90%;
+}
+
+.symptoms-initial {
+	margin: auto;
 }
