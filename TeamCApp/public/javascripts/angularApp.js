@@ -112,10 +112,16 @@ app.controller('NotesCtrl', [
     $scope.form = false;
     $scope.addQuestion = function(){
       $scope.questions.push({title: $scope.title});
+       $scope.title = "";
       console.log($scope.questions);
     };
     $scope.deleteQuestion = function(question){
-      $scope.questions.pop(question)
+      for (var i = 0; i < $scope.questions.length; i++) {
+        if (question.title = $scope.questions[i].title) {
+          $scope.questions.splice(i, 1)
+        }
+      }
+      console.log($scope.questions);
     };
     $scope.displayForm = function(){
       $scope.form = !$scope.form;
