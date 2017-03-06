@@ -209,7 +209,7 @@ app.controller('LookupCtrl', [
     vm.redFlagTextError = '';
     vm.symptomId = 238;
 
-    vm.continueStep = 1;
+    vm.continueStep = 0;
     
     vm.languages=[{value:"en-gb",name:"en-gb"},{value:"de-ch",name:"de-ch"},{value:"fr-fr",name:"fr-fr"},{value:"es-es",name:"es-es"},{value:"tr-tr",name:"tr-tr"}]
     //Setting first option as selected in configuration select
@@ -218,39 +218,6 @@ app.controller('LookupCtrl', [
     vm.formats=[{value:"json",name:"json"},{value:"xml",name:"xml"}]
     //Setting first option as selected in configuration select
     vm.format = vm.formats[0].value;
-    
-    // vm.token = '';
-    // tokenFactory.storeToken(vm.token);
-
-
-    // vm.username = '';
-    // vm.password = '';
-    // vm.error = '';
-    // vm.loginbefore = true;
-    // vm.getToken = function () {
-    //     var uri = "https://sandbox-authservice.priaid.ch/login";
-    //     var computedHash = CryptoJS.HmacMD5(uri, vm.password);
-    //     var computedHashString = computedHash.toString(CryptoJS.enc.Base64);
-    //     apiServices.makeRequest({
-    //         URL: uri,
-    //         method: 'POST',
-    //         headers: {
-    //             'Authorization': 'Bearer ' + vm.username + ':' + computedHashString
-    //         }
-    //     })
-    //             .then(function (data) {
-    //                 console.log(data);
-    //                 vm.token = data.data.Token;
-    //                 vm.error = '';
-    //                 vm.loginbefore = false;
-    //             }, function (data) {
-    //                 console.log('error', data);
-    //                 vm.error = data.data;
-    //                 vm.token = '';
-    //                 return false;
-    //             });
-    // }
-
 
     //  LOAD THE BODY LOCATIONS #1
     vm.loadBodyLocations = function () {     
@@ -304,6 +271,10 @@ app.controller('LookupCtrl', [
 
     vm.continue = function () {
       switch($scope.continueStep) {
+        case 0:
+          $scope.continueStep = 1;
+          vm.loadBodyLocations();
+          break;
         case 1:
           $scope.continueStep = 2;
           $scope.bodyLocationId = $scope.partList.bodyParts[0];
@@ -315,10 +286,24 @@ app.controller('LookupCtrl', [
           vm.loadBodySublocationSymptoms($scope.bodySublocationId, $scope.selectorStatus);
           break;
         case 3:
-          $scope.continueStep = 1;
+          $scope.continueStep = 4;
           $scope.symptomId = $scope.partList.subPartSymptoms;
           console.log('symptomID is', $scope.symptomId, ' with type ', typeof $scope.symptomId);
           vm.loadDiagnosis($scope.symptomId, $scope.gender, $scope.yearOfBirth);
+          break;
+      }
+
+      vm.back = function () {
+        switch($scope.continueStep) {
+          case 2:
+            $scope.continueStep = 1;
+            break;
+          case 3: 
+            $scope.continueStep = 2;
+            break;
+          case 4: 
+            $sconpe.continueStep = 3;
+        }
       }
     } 
 
