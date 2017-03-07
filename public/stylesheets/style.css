@@ -333,6 +333,7 @@ input {
 	flex-direction: row;
 	border: 1px solid #d1d2d4;
 	min-height: 500px;
+	height: 75vh;
 }
 
 .symptoms-step {
@@ -352,5 +353,10 @@ input {
 
 .symptoms-initial {
 	margin: auto;
+}
+
+.symptoms-scroll {
+	overflow: scroll;
+	height: 75%;
 }
 

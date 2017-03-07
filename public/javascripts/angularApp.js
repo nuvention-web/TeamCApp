@@ -309,7 +309,7 @@ app.controller('LookupCtrl', [
             $scope.continueStep = 2;
             break;
           case 4: 
-            $sconpe.continueStep = 3;
+            $scope.continueStep = 3;
         }
       }
     } 

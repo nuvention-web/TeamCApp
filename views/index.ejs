@@ -403,8 +403,10 @@
 
       <div class='symptoms-step col-md-3' ng-show="continueStep > 2">
         <h4>Select your symptoms.</h4>
-        <div ng-repeat="subPartSymptom in subPartSymptoms">
-          <input type="checkbox" checklist-model="partList.subPartSymptoms" checklist-value="subPartSymptom.ID"> {{subPartSymptom.Name}}
+        <div class='symptoms-scroll'>
+          <div ng-repeat="subPartSymptom in subPartSymptoms">
+            <input type="checkbox" checklist-model="partList.subPartSymptoms" checklist-value="subPartSymptom.ID"> {{subPartSymptom.Name}}
+          </div>
         </div>
         <div class="button-group">
           <button ng-show="continueStep == 3" ng-click="back()">Back</button>
@@ -414,9 +416,10 @@
 
       <div class='symptoms-step1 col-md-3' ng-show="continueStep > 3">
         <div class="diagnosis-result" ng-show="diagnosis != ''">
-          <h4>What you should ask your doctor about:</h4>
+          <h4>You should ask your doctor about:</h4>
+          <p>Optional: Select from below to import to notes</p>
           <div ng-repeat="condition in symptomList | orderBy: '-Accuracy'">
-            {{condition.Name}}
+            <input ng-show="condition.Name.length > 0" type="checkbox"> {{condition.Name}}
           </div>
           <div class="button-group">
             <button ng-show="continueStep == 4" ng-click="back()">Back</button>
