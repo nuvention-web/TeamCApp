@@ -1,0 +1,362 @@
+body {
+	font-family: 'Lato', Helvetica, Arial, sans-serif;	
+}    
+
+
+a {
+	color: #43a2ca;
+	text-decoration: none;
+}
+
+h1 {
+	text-transform: uppercase;
+	font-size: 48px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+/* Button styles */
+
+button {
+	border: 2px solid #939598;
+	color: #939598;
+	font-family: inherit;
+	font-size: 12px;
+	background: #ffffff;
+	cursor: pointer;
+	padding: 5px 16px;
+	display: inline-block;
+	margin: 3px 0px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 700;
+	outline: none;
+	position: relative;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+button:after {
+	width: 0%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background: #898989;
+	content: '';
+	position: absolute;
+	z-index: -1;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+button:before {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	position: relative;
+	-webkit-font-smoothing: antialiased;
+}
+
+button:hover,
+button:active {
+	color: #ffffff;
+	background-color: #939598;
+}
+
+button:hover:after,
+button:active:after {
+	width: 100%;
+}
+
+input {
+	border: 2px solid #898989;
+	padding: 5px 16px;
+}
+
+.panel-info > .panel-heading {
+	background-color: #B4BBCC;
+	border-color: #959EB3;
+}
+
+.panel-info {
+	border-color: #959EB3;
+}
+
+
+
+.navbar-default {
+  background-color: #ffffff;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+}
+.navbar-default .navbar-brand {
+  color: #484848;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #484848;
+}
+.navbar-default .navbar-text {
+  color: #484848;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #484848;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #484848;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu {
+  background-color: #ffffff;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a {
+  color: #484848;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a:hover,
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a:focus {
+  color: #484848;
+  background-color: #fce8e9;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > .divider {
+  background-color: #fce8e9;
+}
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+  color: #484848;
+  background-color: #fce8e9;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #484848;
+  background-color: #fce8e9;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  color: #484848;
+  background-color: #fce8e9;
+}
+.navbar-default .navbar-toggle {
+  border-color: #fce8e9;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #fce8e9;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #484848;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #484848;
+}
+.navbar-default .navbar-link {
+  color: #484848;
+}
+.navbar-default .navbar-link:hover {
+  color: #484848;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #484848;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #484848;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #484848;
+    background-color: #fce8e9;
+  }
+}
+
+.page {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: auto;
+}
+
+.page-header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.welcome {
+	display: flex;
+	flex-direction: column;
+}
+
+.lists {
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+}
+
+/* Manage your visit */
+.visit-page {
+	display: flex;
+	flex-direction: row;
+	border: 1px solid #d1d2d4;
+	padding: 20px;
+	min-height: 500px;
+} 
+
+.visit-inner-page {
+	/*height: 100%;*/
+	display: flex;
+	flex-direction: row;
+}
+
+.visit-page h4 {
+	/*font-size: 16px;*/
+	margin-bottom: 20px;
+	text-align: right;
+}
+
+.visit-page h3 {
+	color: #939598;
+	margin-top: 0px;
+	margin-bottom: 20px;
+}
+
+.visit-page h4 {
+	color: #939598;
+}
+
+.visit-date-section {
+	border-right: 1px solid #d1d2d4;
+	padding: 0px;
+	/*padding-top: 15px;*/
+}
+
+.visit-date h4 {
+	color: #d1d2d4;
+	padding-right: 20px;
+	/*margin-bottom: 20px;*/
+}
+
+.selected h4 {
+	color: black;
+}
+
+.visit-notes-section {
+	/*padding-top: 15px;*/
+}
+
+.visit-question-section {
+	/*padding-top: 15px;*/
+	border-right: 1px solid #d1d2d4;
+}
+
+.visit-options {
+	text-transform: uppercase;
+	font-weight: 900;
+	color: #939598;
+}
+
+.fa {
+	margin-right: 10px;
+}
+
+.delete {
+	/*float: right;*/
+	color: #d1d2d4;
+}
+
+
+/*PROFILE SECTION*/
+.profile {
+	border-right: 1px solid #d1d2d4;
+}
+
+.profile-page {
+	border: 1px solid #d1d2d4;
+	display: flex;
+	flex-direction: row;
+	padding: 15px;
+}
+
+.profile-page h3 {
+	color: #939598;
+	margin-top: 0px;
+	margin-bottom: 20px;
+}
+
+.profile h3 {
+	margin-top: 10px;
+	font-size: 20px;
+}
+
+.profile p {
+	margin: 2px;
+}
+
+.profile .visit-options {
+	position: absolute;
+	bottom: 0;
+	right: 20;
+}
+
+.profile-tips {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	margin-left: 30px;
+}
+
+.profile-tips p {
+	margin-top: 5px;
+	margin-bottom: 20px;
+}
+
+.profile img {
+	/*margin-bottom: 10px;*/
+}
+
+
+/* SYMPTOMS PAGE */
+.symptoms-page {
+	display: flex;
+	flex-direction: row;
+	border: 1px solid #d1d2d4;
+	min-height: 500px;
+	height: 75vh;
+}
+
+.symptoms-step {
+	display: flex;
+	flex-direction: column;
+	border-right: 1px solid #d1d2d4;
+}
+
+.button-group {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	position: absolute;
+	bottom: 20px;
+	width: 90%;
+}
+
+.symptoms-initial {
+	margin: auto;
+}
+
+.symptoms-scroll {
+	overflow: scroll;
+	height: 75%;
+}
+

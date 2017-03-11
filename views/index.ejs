@@ -1,0 +1,437 @@
+<html>
+  <head>
+    <title>JugoMed</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
+    <script src="/javascripts/angularApp.js"></script>
+    <script src="/scripts/utils/apiurls.js"></script>
+    <script src="/scripts/services/apiServices.js"></script>
+    <script src="/scripts/factories/tokenFactory.js"></script>
+    <script src="/scripts/factories/languageFactory.js"></script>
+    <script src="/scripts/factories/formatFactory.js"></script>
+    <script src="/scripts/hmac-md5.js"></script>
+    <script src="/scripts/enc-base64-min.js"></script>
+    <script src="checklist-model-master/checklist-model.js"></script>
+
+
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+
+    <link rel="stylesheet" href="/images/font-awesome-4.7.0/css/font-awesome.min.css">
+  </head>
+
+  <body ng-app="flapperNews" ng-controller="MainCtrl">
+    <div class="row">
+      <div class="col-md-12">
+        <ui-view></ui-view>
+      </div>
+    </div>
+    <div ng-view></div>
+
+
+    <!-- Welcome page --> 
+    <script type="text/ng-template" id="/home.html">
+    <div style="height:100px;"></div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <img alt="Brand" src="/images/logo.png" height="20">
+          </a>
+       </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li ng-class="{ active: isActive('/')}" class='active'><a href="/">Home</a></li>
+            <li ng-class="{ active: isActive('#profile')}"><a href="#/profile">Profile</a></li>
+            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">Check Symptoms</a></li>
+            <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">Notes</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+      <div class='welcome page'>
+        <img src="/images/logo.png" height="100">
+        <div class='page-header'>
+          <h3> Connecting the pieces for your doctor visits. </h1>
+        </div>
+      </div>
+      <div class="row">
+      <div class="col-md-4"></div>
+       <div class="panel panel-default col-md-4">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" ng-model="username" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" ng-model="password" placeholder="Password">
+                        </div>
+                        <button type="submit" ng-click="getToken()" >Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </script>
+
+
+  <!-- PROFILE PAGE -->
+    <script type="text/ng-template" id="/profile.html">
+    <div style="height:100px;"></div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <img alt="Brand" src="/images/logo.png" height="20">
+          </a>
+       </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li ng-class="{ active: isActive('/')}"><a href="/">Home</a></li>
+            <li ng-class="{ active: isActive('#profile')}" class='active'><a href="#/profile">Profile</a></li>
+            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">Check Symptoms</a></li>
+            <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">Notes</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <div class='col-md-1 visit-gap'></div>
+    <div class='col-md-10 profile-page'>
+      <div class='col-md-3 profile'>
+        <img class="img-circle" src="/images/David.jpg" width="200"> 
+        <h3>David Lastname</h3>
+        <p>
+          <span style='color: #939598;'>Age:</span>
+          <span style='color: #000000;'> 59</span>
+        </p>
+        <p>
+          <span style='color: #939598;'>Sex:</span>
+          <span style='color: #000000;'> Male</span>
+        </p>
+        <p>
+          <span style='color: #939598;'>Height:</span>
+          <span style='color: #000000;'> 5'11"</span>
+        </p>
+        <p>
+          <span style='color: #939598;'>Weight:</span>
+          <span style='color: #000000;'> 173 lb</span>
+        </p>
+        <p>
+          <span style='color: #939598;'>Location:</span>
+          <span style='color: #000000;'> Evanston, IL</span>
+        </p>
+        <br>
+        <div class='visit-options'>
+          <p><i class="fa fa-pencil" aria-hidden="true"></i>Edit bio</p>
+        </div>
+      </div>
+      <div class='col-md-6 profile'>
+        <h3>Personal medical history</h3>
+        <p>
+          <span style='color: #939598;'>Bronchitis:</span>
+          <span style='color: #000000;'> 2016</span>
+        </p>
+        <p>
+          <span style='color: #939598;'>Sinus infection:</span>
+          <span style='color: #000000;'> 2010, 2013</span>
+        </p>
+        <p>
+          <span style='color: #939598;'>High blood pressure:</span>
+          <span style='color: #000000;'> 2007 to present</span>
+        </p>
+        <p>
+          <span style='color: #939598;'>Type 1 diabetes:</span>
+          <span style='color: #000000;'> 1970 to present</span>
+        </p>
+        <h3>Family medical history</h3>
+        <p>
+          <span style='color: #939598;'>Mother:</span>
+          <span style='color: #000000;'> Lung cancer</span>
+        </p>
+        <p>
+          <span style='color: #939598;'>Grandfather:</span>
+          <span style='color: #000000;'> Liver disease</span>
+        </p>
+        <h3>Allergies</h3>
+        <p>
+          <span style='color: #939598;'>Mild to moderate:</span>
+          <span style='color: #000000;'> Seasonal, cats</span>
+        </p>
+        <p>
+          <span style='color: #939598;'>Severe:</span>
+          <span style='color: #000000;'> Eggs, peanuts</span>
+        </p>
+        <h3>Medications</h3>
+        <p>
+          <span style='color: #939598;'>Humulin R:</span>
+          <span style='color: #000000;'> 100% of U-500 TDD per day</span>
+        </p>
+        <p>
+          <span style='color: #939598;'>Fluticasone (nasal):</span>
+          <span style='color: #000000;'> 200mcg per day</span>
+        </p>
+        <br>
+        <div class='visit-options'>
+          <p><i class="fa fa-pencil" aria-hidden="true"></i>Edit medical info</p>
+        </div>
+      </div>
+      <div class='col-md-3 profile-tips'>
+        <h3>Health Tips For David</h3>
+        <img src="/images/allergies.jpg" width="100%">
+        <p>20 Home remedies to help you get through this allergy season</p>
+        <img src="/images/meditation.jpg" width="100%">
+        <p>Learn to live with it: Becoming stress-free</p>
+      </div>
+    </div>
+    <div class='col-md-1 visit-gap'></div>
+    
+    </script>
+
+
+
+    <!-- Talking points -->
+    <script type="text/ng-template" id="/talking.html">
+    <div style="height:100px;"></div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <img alt="Brand" src="/images/logo.png" height="20">
+          </a>
+       </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li ng-class="{ active: isActive('/')}"><a href="/">Home</a></li>
+            <li ng-class="{ active: isActive('#profile')}"><a href="#/profile">Profile</a></li>
+            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">Check Symptoms</a></li>
+            <li ng-class="{ active: isActive('#notes')}"><a href="#/notes">Notes</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class='talking page'>
+      <div class="page-header">
+        <h1>Talking points</h1>
+      </div>
+      <div class='lists'>
+        <!-- Incomplete points -->
+        <ol>
+          <div ng-repeat="point in points | orderBy: '-priority'">
+            <li>
+              {{point.title}} [Priority {{point.priority}}]
+              <span ng-click="incrementPriority(point)">+</span>
+              <span ng-click="decrementPriority(point)">-</span>
+              <span ng-click="completedPoint(point)">Complete</span>
+            </li>
+          </div>
+        </ol>
+        <!-- Completed points -->
+        <ul>
+          <div ng-repeat="point in completed">
+            <li>
+              <span ng-click="undoComplete(point)">(Undo)</span>
+              {{point.title}} [Priority {{point.priority}}]
+            </li>
+          </div>
+        </ul>
+      </div>
+      <h2>Add point</h2>
+      <form ng-submit="addPoint()">
+        <input type="text" placeholder="Title" ng-model="title"></input>
+        <br>
+        <button type="submit">Add</button>
+      </form>
+    </div>
+    </script>
+
+
+    <!-- Manage your doctor's visit -->
+    <script type="text/ng-template" id="/notes.html">
+    <div style="height:100px;"></div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <img alt="Brand" src="/images/logo.png" height="20">
+          </a>
+       </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li ng-class="{ active: isActive('/')}"><a href="/">Home</a></li>
+            <li ng-class="{ active: isActive('#profile')}"><a href="#/profile">Profile</a></li>
+            <li ng-class="{ active: isActive('#lookup')}"><a href="#/lookup">Check Symptoms</a></li>
+            <li ng-class="{ active: isActive('#notes')}" class='active'><a href="#/notes">Notes</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <div class='col-md-1 visit-gap'></div>
+    <div class='visit-page col-md-10'>
+
+      <!-- <div class='col-md-1 visit-gap'></div> -->
+
+      <!-- Display date tabs -->
+      <div class='col-md-3 visit-date-section'>
+        <div class='visit-date'>
+          <h4>July 23, 2016</h4>
+        </div>
+        <div class='visit-date'>
+          <h4>October 1, 2016</h4>
+        </div>  
+        <div class='visit-date selected'>
+          <h4>February 27, 2017</h4>
+        </div>  
+        <div class='visit-date'>
+          <h4>April 31, 2017</h4>
+        </div>  
+      </div>
+
+      <div class='col-md-9 visit-inner-page'>
+      <!-- Ask your doctor about -->
+        <div class='col-md-6 visit-question-section'>
+          <h3>Ask your doctor about:</h3>
+          <p>
+            What are other signs of hypersensitivity I should look out for?
+            <span class='delete'><i class="fa fa-times-circle-o" aria-hidden="true"></i></span>
+          </p>
+          <p>
+            What are common environmental triggers?
+            <span class='delete'><i class="fa fa-times-circle-o" aria-hidden="true"></i></span>
+          </p>
+          <p>
+            Are there any home remedies to alleviate my reactions?
+            <span class='delete'><i class="fa fa-times-circle-o" aria-hidden="true"></i></span>
+          </p>
+          <div ng-repeat="question in questions">
+            <p>
+              {{question.title}}
+              <span class='delete' ng-click="deleteQuestion(question)"><i class="fa fa-times-circle-o" aria-hidden="true"></i></span>
+            </p><!-- <span ng-click="deleteQuestion(question)">Delete</span> -->
+          </div>
+          <div class='display-form'>
+            <div class="visit-options" ng-click="displayForm()" ng-show="!form">
+              <p><i class="fa fa-plus-circle" aria-hidden="true"></i>Add a question</p>
+            </div>
+          </div>
+          <div class='question-form' ng-show="form">
+            <form ng-submit="addQuestion()">
+              <input type="text" placeholder="Enter your question" ng-model="title"></input>
+              <br>
+              <button type="submit" ng-click="displayForm()">Add</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Notes from the visit -->
+        <div class='col-md-6 visit-notes-section'>
+          <h3>Notes from the visit:</h3>
+          <div class='visit-options'>
+            <p><i class="fa fa-plus" aria-hidden="true"></i>Start taking notes</p>
+          </div>
+          <div class='visit-options'>
+            <p><i class="fa fa-microphone" aria-hidden="true"></i> Record voice memo</p>
+          </div>
+          <div class='visit-options'>
+            <p><i class="fa fa-camera" aria-hidden="true"></i> Take a photo</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class='col-md-1 visit-gap'></div> -->
+    </div>
+    <div class='col-md-1 visit-gap'></div>
+
+    </script>
+
+    <!-- Lookup view -->
+    <script type="text/ng-template" id="/lookup.html">
+      <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <img alt="Brand" src="/images/logo.png" height="20">
+          </a>
+       </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li ng-class="{ active: isActive('/')}" ><a href="/">Home</a></li>
+            <li ng-class="{ active: isActive('#profile')}"><a href="#/profile">Profile</a></li>
+            <li ng-class="{ active: isActive('#lookup')}" class='active'><a href="#/lookup">Check Symptoms</a></li>
+            <li ng-class="{ active: isActive('#notes')}" ><a href="#/notes">Notes</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div style='height: 100px'></div>
+    <div class='col-md-1 visit-gap'></div>
+    <div class='col-md-10 symptoms-page'>
+
+      <div class="symptoms-initial" ng-show="continueStep == 0">
+        <button ng-show="continueStep == 0" ng-click="continue()">
+          Begin symptom check
+        </button>
+      </div>
+
+      <div class='symptoms-step col-md-3' ng-show="continueStep > 0">
+        <h4>What's bothering you?</h4>
+        <div ng-repeat="bodyPart in bodyParts">
+          <input type="checkbox" checklist-model="partList.bodyParts" checklist-value="bodyPart.ID"> {{bodyPart.Name}}
+        </div>
+        <div class="button-group">
+          <button ng-show="continueStep == 1" ng-click="continue()">Continue</button>
+        </div>
+      </div>
+
+      <div class='symptoms-step col-md-3' ng-show="continueStep > 1">
+        <h4>Select the specific body part.</h4>
+        <div ng-repeat="subbodyPart in subbodyParts">
+          <input type="checkbox" checklist-model="partList.subbodyParts" checklist-value="subbodyPart.ID"> {{subbodyPart.Name}}
+        </div>
+        <div class="button-group">
+          <button ng-show="continueStep == 2" ng-click="back()">Back</button>
+          <button ng-show="continueStep == 2" ng-click="continue()">Continue</button>
+        </div>
+      </div>
+
+      <div class='symptoms-step col-md-3' ng-show="continueStep > 2">
+        <h4>Select your symptoms.</h4>
+        <div class='symptoms-scroll'>
+          <div ng-repeat="subPartSymptom in subPartSymptoms">
+            <input type="checkbox" checklist-model="partList.subPartSymptoms" checklist-value="subPartSymptom.ID"> {{subPartSymptom.Name}}
+          </div>
+        </div>
+        <div class="button-group">
+          <button ng-show="continueStep == 3" ng-click="back()">Back</button>
+          <button ng-show="continueStep == 3" ng-click="continue()">Continue</button>
+        </div>
+      </div>
+
+      <div class='symptoms-step1 col-md-3' ng-show="continueStep > 3">
+        <div class="diagnosis-result" ng-show="diagnosis != ''">
+          <h4>You should ask your doctor about:</h4>
+          <p>Optional: Select from below to import to notes</p>
+          <div ng-repeat="condition in symptomList | orderBy: '-Accuracy'">
+            <input ng-show="condition.Name.length > 0" type="checkbox"> {{condition.Name}}
+          </div>
+          <div class="button-group">
+            <button ng-show="continueStep == 4" ng-click="back()">Back</button>
+            <button ng-show="continueStep == 4" ng-click="continue()" onclick="location.href='#/notes';">Import to notes</button>
+          </div>
+        </div>
+      </div>
+      <div class="alert alert-danger" ng-show="bodyLocationsError != ''">
+          <pre class="data">{{bodyLocationsError | json}}</pre>
+      </div>
+    </div>
+    <div class='col-md-1 visit-gap'></div>
+  </script>
+  </body>
+</html>
