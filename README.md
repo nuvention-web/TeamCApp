@@ -13,3 +13,7 @@ Start MongoDB with $mongod
 Start Node with $npm start
 
 Open up localhost:3000 in your web browser.
+
+Credentials: 
+user: brittany_herr_edu
+password: AQb557RL$hZpHS-t 
