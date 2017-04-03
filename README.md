@@ -1,21 +1,7 @@
-# TeamCApp
+# Mean Contactlist Angular2
 
-Welcome to the Team C!
+Contact List is a RESTful API server and web application built with the MEAN (Angular 2) stack. It is a simple example that aims to concisely demonstrate basic MEAN and REST architecture. You can find the full tutorial here: https://devcenter.heroku.com/articles/mean-apps-restful-api.
 
-To get started:
+You can deploy a live copy of this application to Heroku with the button below.
 
-Clone the repository: https://github.com/nuvention-web/TeamCApp.git
-
-Install MongoDB and Node
-
-Start MongoDB with $mongod
-
-Start Node with $npm start
-
-Open up localhost:3000 in your web browser.
-
-Credentials: 
-user: brittany_herr_edu
-password: AQb557RL$hZpHS-t 
-
-Please contact brittanyherr2018@u.northwestern.edu if you have trouble. Thanks!
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/chrisckchang/jugomed)
