@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+  "name":    "Sprinkle",
+  "version": "0.0",
+  "offline_enabled": true,
+
+  "background": {
+    "persistent": false,
+    "scripts": ["background.js"]
+  },
+
+  "icons": { 
+    "128": "favicon.png" 
+  },
+
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+
+
+  "content_scripts": [{
+    "matches":    ["<all_urls>"],
+    "js":         ["content.js"],
+    "run_at":     "document_idle",
+    "all_frames": false
+  }]
+
+ 
+}
