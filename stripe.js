@@ -27,14 +27,30 @@ function setOutcome(result) {
   if (result.token) {
     // Use the token to create a charge or a customer
     // https://stripe.com/docs/charges
+    console.log(result.token);
+    console.log(result.token.id);
     successElement.querySelector('.token').textContent = result.token.id;
     successElement.classList.add('visible');
+    
+    submitToken(result.token.id); // submits token to php
   } else if (result.error) {
     errorElement.textContent = result.error.message;
     errorElement.classList.add('visible');
   }
+
 }
 
+// Submit token from javascript to PHP server
+function submitToken(token) {
+  var url = "stripe.php?token=";
+  window.location.href = url + token;
+}
+
+
+
+
+
+// Works like main() function -- sketch
 (function(window, document, undefined){
 
 // code that should be taken care of right away
