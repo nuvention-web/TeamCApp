@@ -84,6 +84,7 @@ h3 {
 #donate-info {
 	display: none;
 	width: 100%;
+	margin: 20px;
 }
 
 .donate--item {
@@ -252,3 +253,4 @@ a {
 .select-style select:focus {
     outline: none;
 }
+

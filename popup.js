@@ -70,14 +70,11 @@ function closeSave() {
   addCC.style.display = 'block';
 }
 
-
-
-
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelector('button').addEventListener('click', buttonHandler);
-  document.querySelector('#add-cc').addEventListener('click', showNewCC);
-  document.querySelector('#save-link').addEventListener('click', changeCC);
-  document.querySelector('#save-link').addEventListener('click', closeSave);
+  // document.querySelector('#add-cc').addEventListener('click', showNewCC);
+  // document.querySelector('#save-link').addEventListener('click', changeCC);
+  // document.querySelector('#save-link').addEventListener('click', closeSave);
 });
 
 document.addEventListener('DOMContentLoaded', function () {
