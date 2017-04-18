@@ -52,21 +52,20 @@ function getPrice (url) {
 };
 
 
-value_mVPu
-
 function getDonation (url) {
   var price = getPrice(url).substring(1);
   var priceNum = parseFloat(price);
   var ceiling = Math.ceil(priceNum);
+  if (ceiling == priceNum) {
+    var donation = "$1.00";
+    return donation;
+  }
   var donationNum = Math.round(100*(ceiling - priceNum))/100;
   var donation = (donationNum.toString()).split(".")[1];
   if (donation.length == 1){
     donation = donation + "0";
   }
   donation = "$0." + donation;
-  if (donation == 0) {
-    donation = "$1.00";
-  }
   return donation;
 };
 
