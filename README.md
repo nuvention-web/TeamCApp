@@ -12,6 +12,12 @@
 - Select the htdocs folder (where all the files from the repo should be)
 - The extension is now available in your Google extensions (and should appear on the right side of the browser)
 
+
+**Required for the credit card transaction to process properly**
+- Add the following to your .bash file PATH=/Applications/MAMP/bin/php/php7.1.1/bin:$PATH
+- Install Composer locally in your htdocs directory using curl -s https://getcomposer.org/installer | php
+- run php composer.phar install to install the dependencies.
+
 **How to use:**
 - Go on a retailer/food website and add something to your shopping cart (e.g. UberEATs, Postmates, Forever 21)
 - Open the Chrome extension and you should see a donation amount
