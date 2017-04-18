@@ -29,15 +29,30 @@ function getPrice (url) {
     classname = "total_price";
   } else if (url.indexOf("sephora") !== -1){
     classname = "Receipt-price";
+  } else if (url.indexOf("grubhub") !== -1){
+    classname = "lineItem-val"; 
+    var price = document.getElementsByClassName(classname)[3].innerHTML;
+    return price;
+  } else if (url.indexOf("postmates") !== -1){
+    classname = "total"; 
+    var str = document.getElementsByClassName(classname)[2].innerHTML;
+    var price = str.substring(str.indexOf(":")+2);
+    return price;
+  } else if (url.indexOf("ubereats") !== -1){
+    classname = "value_mVPu";
+    var price = document.getElementsByClassName(classname)[3].innerHTML;
+    return price;
   } else if (url.indexOf("peapod") !== -1){
     classname = "checkout-lineItem--total";
     var price = document.getElementsByClassName(classname)[0].childNodes[0].nextSibling.innerHTML.substring(7);
-    console.log(price);
     return price;
   };
   var price = document.getElementsByClassName(classname)[0].innerHTML;
   return price;
 };
+
+
+value_mVPu
 
 function getDonation (url) {
   var price = getPrice(url).substring(1);
