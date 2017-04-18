@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="popup.js"></script>
+    <script src="jquery-3.2.0.min.js"></script>
+    <link rel="stylesheet" href="popup.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  </head>
+  <body>
+  <div class='sprinkle-header'>
+    <img src='/img/logo.png'>
+    <h2>Team C App</h2>
+  </div>
+  <div id='before-success'>
+    
+    <div class='data'>
+      <div class='data--item'>
+        <div class='title'>Total price:</div>
+        <div id='Price'></div>
+      </div>
+      <div class='data--item'>
+        <div class='title'>Donation:</div>
+        <div id='Donation'></div>
+      </div>
+    </div>
+    <div id='donate-info'>
+      <!-- <p class='link' id='add-cc'>Add a new credit card</p> -->
+      <a class='link' href='http://localhost:80/stripe.html'>Add a new credit card</a>
+      <div id='new-cc'>
+      <!-- Form goes here -->
+      <!-- For now, form opens up on another web page -->
+      </div>
+    </div>
+    <button id='donate-button' class='btn btn-1 btn-1a'>Donate</button>
+    <div id="charity">
+      <p>Funding Firstname's treatment costs</p>
+    </div>
+  </div>
+  <div id='after-success'>
+    <h3>Woohoo!</h3>
+    <p class='success'>Thank you so much for supporting my heart failure treatment costs!</p>
+    <p class='success'>&#9829 Firstname Lastname</p>
+  </div>
+
+  </body>
+</html>
+

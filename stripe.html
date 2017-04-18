@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <script src="https://js.stripe.com/v3/"></script>
+    <link rel="stylesheet" href="stripe.css">
+    <script type="text/javascript" src="stripe.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  </head>
+  <body>
+    <img class='logo' src='/img/favicon.png'>
+    <h1>Add a new credit card</h1>
+    <form>
+      <div class="group">
+        <label>
+          <span>Name</span>
+          <input name="cardholder-name" class="field" placeholder="Jane Doe" />
+        </label>
+        <label>
+          <span>Phone</span>
+          <input class="field" placeholder="(123) 456-7890" type="tel" />
+        </label>
+      </div>
+      <div class="group">
+        <label>
+          <span>Card</span>
+          <div id="card-element" class="field" name='card'></div>
+        </label>
+      </div>
+      <button type="submit">Donate $0.10</button>
+      <div class="outcome">
+        <div class="error"></div>
+        <div class="success">
+          Success! Your Stripe token is <span class="token"></span>
+        </div>
+      </div>
+    </form>
+    <h3>Powered by Stripe</h3>
+  </body>
+</html>
