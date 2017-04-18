@@ -29,6 +29,13 @@ function getPrice (url) {
     classname = "total_price";
   } else if (url.indexOf("sephora") !== -1){
     classname = "Receipt-price";
+  } else if (url.indexOf("amazon") !== -1){
+    classname = "sc-price";
+  } else if (url.indexOf("etsy") !== -1){
+    classname = "currency-value";
+    var priceNum = document.getElementsByClassName(classname)[0].innerHTML;
+    var price = "$" + priceNum;
+    return price;
   } else if (url.indexOf("grubhub") !== -1){
     classname = "lineItem-val"; 
     var price = document.getElementsByClassName(classname)[3].innerHTML;
