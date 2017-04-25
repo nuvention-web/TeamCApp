@@ -33,9 +33,16 @@ h1 {
 }
 
 h3 {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 200;
   color: #8898AA;
+}
+
+p {
+  font-size: 16px;
+  font-weight: 200;
+  color: #8898AA;
+  margin: 5px;
 }
 
 .group {
@@ -147,4 +154,11 @@ button:active {
   position: fixed;
   top: 10;
   left: 10;
+}
+
+.foot {
+  position: absolute;
+  bottom: 10;
+  right: 10;
+  font-weight: 500;
 }

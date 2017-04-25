@@ -6,9 +6,9 @@
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
   </head>
   <body>
-    <img class='logo' src='/img/favicon.png'>
+    <img class="logo" src="/img/favicon.png">
     <h1>Add a new credit card</h1>
-    <form>
+    <form id="payment-form" method="post" action="stripe.php">
       <div class="group">
         <label>
           <span>Name</span>
@@ -22,7 +22,7 @@
       <div class="group">
         <label>
           <span>Card</span>
-          <div id="card-element" class="field" name='card'></div>
+          <div id="card-element" class="field" name="card"></div>
         </label>
       </div>
       <button type="submit">Donate $0.10</button>
@@ -33,6 +33,6 @@
         </div>
       </div>
     </form>
-    <h3>Powered by Stripe</h3>
+    <h3 class="foot">Powered by Stripe</h3>
   </body>
 </html>

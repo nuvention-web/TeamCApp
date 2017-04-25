@@ -32,7 +32,8 @@ function setOutcome(result) {
     successElement.querySelector('.token').textContent = result.token.id;
     successElement.classList.add('visible');
     
-    submitToken(result.token.id); // submits token to php
+    stripeTokenHandler(result.token);
+    // submitToken(result.token.id); // submits token to php
   } else if (result.error) {
     errorElement.textContent = result.error.message;
     errorElement.classList.add('visible');
@@ -41,11 +42,21 @@ function setOutcome(result) {
 }
 
 // Submit token from javascript to PHP server
-function submitToken(token) {
-  var url = "stripe.php?token=";
-  window.location.href = url + token;
-}
+// function submitToken(token) {
+//   var url = "stripe.php?token=";
+//   window.location.href = url + token;
+// }
 
+function stripeTokenHandler(token) {
+  // Insert the token ID into the form so it gets submitted to the server
+  var form = document.getElementById('payment-form');
+  var hiddenInput = document.createElement('input');
+  hiddenInput.setAttribute('type', 'hidden');
+  hiddenInput.setAttribute('name', 'stripeToken');
+  hiddenInput.setAttribute('value', token.id);
+  form.appendChild(hiddenInput);
+  form.submit();
+}
 
 
 
