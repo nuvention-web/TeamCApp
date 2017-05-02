@@ -1,4 +1,4 @@
-# Team C App
+# Collective
 
 **How to run locally:**
 - Download and install MAMP from https://www.mamp.info/
