@@ -2,7 +2,7 @@
 function setDOMInfo(info) {
   document.getElementById('Price').textContent   = info.Price;
   document.getElementById('Donation').textContent  = info.Donation;
-  document.getElementById('buttons').textContent = info.buttons;
+  getDonationValue();
 }
 
 // Once the DOM is ready...
@@ -22,59 +22,25 @@ window.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-var finish = false;
-function buttonHandler() {
-  if (!finish) {
-    showDonate();
-    finish = true;
-  }
-  else {
-    donateSuccess();
-  }
-}
+// Global variable later updated to real donation amount
+var donationAmount = '0.00';
 
-function showDonate() {
-  var donateItem = document.getElementById('donate-info');
-  donateItem.style.display = 'block';
+// Updates donation amount after setDOMInfo is called
+function getDonationValue() {
+  var donation = document.getElementById('Donation').innerHTML;
   var donateButton = document.getElementById('donate-button');
-  donateButton.innerHTML = 'Confirm';
+  donateButton.innerHTML += ' ' + donation;
+  donationAmount = donation.substring(1);
 }
 
-function donateSuccess() {
-  var beforeSuccess = document.getElementById('before-success');
-  beforeSuccess.style.display = 'none';
-  var afterSuccess = document.getElementById('after-success');
-  afterSuccess.style.display = 'flex';
-  var bodyItem = document.querySelector('body');
-  bodyItem.style.backgroundImage = 'url(\'confetti.png\')';
-}
-
-function showNewCC() {
-  var ccItem = document.getElementById('new-cc');
-  ccItem.style.display = 'block';
-  var addCC = document.getElementById('add-cc');
-  addCC.style.display = 'none';
-
-}
-
-function changeCC() {
-  var currentCC = document.getElementById('current-cc');
-  var newCC = document.getElementById('frmCCNum');
-  currentCC.innerHTML = 'Ending in ' + newCC.value.substr(12);
-}
-
-function closeSave() {
-  var ccItem = document.getElementById('new-cc');
-  ccItem.style.display = 'none';
-  var addCC = document.getElementById('add-cc');
-  addCC.style.display = 'block';
+// Opens new window after "Donate" button is clicked
+function donateHandler() {
+  window.open("https://collective-donate.herokuapp.com/" + '?donation=' + donationAmount);
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  document.querySelector('button').addEventListener('click', buttonHandler);
-  // document.querySelector('#add-cc').addEventListener('click', showNewCC);
-  // document.querySelector('#save-link').addEventListener('click', changeCC);
-  // document.querySelector('#save-link').addEventListener('click', closeSave);
+  var donateButton = document.getElementById('donate-button');
+  donateButton.addEventListener('click', donateHandler);
 });
 
 document.addEventListener('DOMContentLoaded', function () {
