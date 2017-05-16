@@ -133,8 +133,9 @@ a {
 /* Charity section */
 .charity {
 	display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     color: gray;
     font-size: 12px;
 }
