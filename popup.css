@@ -10,60 +10,42 @@ body {
 	background-size: cover;
 }
 
-.sprinkle-header {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-#before-success{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-#after-success{
-	display: none;
-	flex-direction: column;
-	align-items: center;
-}
-
-.title {
-	font-weight: 700px;
-}
-
 img {
 	width: 60px;
 	height: auto;
 }
 
-#sprinkle {
-	width: 75px;
-}
-
-.success {
-	text-align: center;
-}
-
-.success p {
-	margin: 0;
-}
-
-.link {
-	cursor: pointer;
-	color: #7b97e7;
-}
-
-.link:hover {
-	cursor: pointer;
-	text-decoration: underline;
-	color: #7b97e7;
-}
 
 h3 {
 	margin-top: 0px;
 	margin-bottom: 10px;
 }
+
+a {
+	text-decoration: none;
+	color: #7b97e7;
+}
+
+/* Header section */
+
+.header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.heart {
+	color: #7b97e7!important;
+}
+
+.header h1 {
+	font-size: 40px;
+	font-weight: 100;
+	color: #7d7d7d;
+	margin-top: 0px;
+}
+
+/* Price section */
 
 .data {
 	display: flex;
@@ -81,12 +63,6 @@ h3 {
 	width: 100%;
 }
 
-#donate-info {
-	display: none;
-	width: 100%;
-	margin: 20px;
-}
-
 .donate--item {
 	display: flex;
 	flex-direction: row;
@@ -94,11 +70,14 @@ h3 {
 	padding-top: 20px;
 }
 
-#new-cc {
-	display: none;
+/* Button section */
+.submit {
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-/* Button 1 */
+/* Button styles */
 .btn {
 	font-family: inherit;
 	font-size: inherit;
@@ -108,7 +87,7 @@ h3 {
 	cursor: pointer;
 	padding: 5px 10px;
 	display: inline-block;
-	margin: 15px 30px;
+	margin: 15px 30px 0px 30px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	font-weight: 700;
@@ -144,7 +123,6 @@ h3 {
 	border: 3px solid #7b97e7;
 }
 
-/* Button 1a */
 .btn-1a:hover,
 .btn-1a:active {
 	color: #7b97e7;
@@ -152,105 +130,21 @@ h3 {
 	border: 3px solid #7b97e7;
 }
 
-/* Form */
-.field-set {
-  	border: 1px solid #d6d6d6;
-}
-
-.form-group {
-	padding: 5px 0px;
+/* Charity section */
+.charity {
 	display: flex;
-	flex-direction: column;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    color: gray;
+    font-size: 12px;
+    margin: 10px 0 0 0;
 }
 
-.form-row {
-	display: flex;
-	flex-direction: row;
-}
-
-.form-group input:focus {
-    border: 3px solid #555;
-}
-
-.form-group input {
-    padding: 5px;
-    margin: 5px 0;
-    border: 3px solid #ccc;
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
-    outline: none;
-}
-
-#payment {
-	color: #d6d6d6;
-}
-
-#frmCCCVC {
-	width: 30px;
-}
-
-#frmNameCC {
-	width: 160px;
-}
-
-#frmCCNum {
-	margin-right: 10px;
-	width: 100px;
-}
-
-#frmMonthCC {
-	width: 115px;
-	height: 30px;
-}
-
-
-#save-link {
-	float: right;
-	margin: 5px;
-}
-
-#charity {
-	color:gray;
-	font-size: 12px;
-	position: flex;
-}
-
-#charity p {
+.charity p {
 	margin: 0;
 }
 
-a {
-	text-decoration: none;
+#invalid {
+	display: none;
 }
-
-.date-picker {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-}
-
-.select-style {
-	border: 3px solid #ccc;
-	padding: 5px;
-    border-radius: 3px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    background-color: white;
-    /*background: #fafafa url("img/icon-select.png") no-repeat 90% 50%;*/
-}
-
-.select-style select {
-    padding: 5px 8px;
-    border: none;
-    box-shadow: none;
-    background: transparent;
-    background-image: none;
-    -webkit-appearance: none;
-}
-
-.select-style select:focus {
-    outline: none;
-}
-
