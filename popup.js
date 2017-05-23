@@ -1,6 +1,7 @@
 // Update the relevant fields with the new data
 function setDOMInfo(info) {
   if (info == undefined) {
+    chrome.browserAction.setBadgeText({text: ''});
     document.getElementById('Price').textContent = 'N/A';
     document.getElementById('Donation').textContent = 'N/A';
     document.getElementById('valid').style.display = 'none';
@@ -8,12 +9,13 @@ function setDOMInfo(info) {
     document.getElementById('invalid').style.display = 'flex';
   }
   else { 
+    // chrome.browserAction.setBadgeText(string, 'woo');
+    // chrome.browserAction.setBadgeText({text: '!'});
     document.getElementById('Price').textContent   = info.Price;
     document.getElementById('Donation').textContent  = info.Donation;
     getDonationValue();
   } 
 }
-  
 
 // Once the DOM is ready...
 window.addEventListener('DOMContentLoaded', function () {
